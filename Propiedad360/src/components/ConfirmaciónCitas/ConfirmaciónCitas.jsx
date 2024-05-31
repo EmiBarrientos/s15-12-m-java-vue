@@ -4,7 +4,7 @@ import Confirmación from './Confirmación/Confirmación';
 
 const ConfirmaciónCitas = () => {
   return (
-    <section className="w-full">
+    <section className="w-full bg-white">
         <SelectedArea />
         <Confirmación />
     </section>

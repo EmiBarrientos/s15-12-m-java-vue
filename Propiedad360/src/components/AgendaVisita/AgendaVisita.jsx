@@ -4,7 +4,7 @@ import Agenda from './Agenda/Agenda';
 
 const AgendaVisita = () => {
   return (
-    <section className="w-full">
+    <section className="w-full bg-white">
         <SelectedArea/>
         <Agenda />
     </section>

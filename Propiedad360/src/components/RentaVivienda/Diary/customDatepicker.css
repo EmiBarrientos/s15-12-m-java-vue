@@ -6,9 +6,9 @@
 .custom-datepicker .react-datepicker__day,
 .custom-datepicker .react-datepicker__day-name,
 .custom-datepicker .react-datepicker__time-name {
-    width: 3rem;
+    width: 4.6rem;
     height: 3rem;
-    line-height: 3rem;
+    line-height: 2rem;
 
 }
   

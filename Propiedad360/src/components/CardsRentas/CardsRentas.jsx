@@ -15,121 +15,40 @@ import img8 from '../CardsRentas/assets/img08.png';
 import img9 from '../CardsRentas/assets/img09.png';
 
 function CardsRentas() {
-    return (
-    <section  className="container mx-auto px-4 py-32">
-        <RentYourNew />
-        <div className="mt-4">
-            <Mapa />
-        </div>   
-        <div> 
-            <p className="text-[#191A18]">
-               Hemos encontrado 15 propiedades en la ubicación seleccionada
-            </p>
-            <div className="grid grid-cols-3 gap-16">
-                <Link to="/detalle-de-vivienda"> 
-                    <div className="card w-50 cursor-pointer">
-                        <figure className="px-10 pt-10">
-                            <img src={img1} alt="Shoes" className="rounded-xl" />
-                        </figure>
-                        <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E]  rounded-tr-lg">
-                            <p className="text-[#C3922E]">Apartamentos <br/> 2 habitaciones</p>
-                            <p>Zona: Barrio Norte</p>
-                            <p>$5200 mensuales</p>
-                        </div>
-                    </div>
-                </Link>
-                <div className="card w-50 cursor-pointer ">
-                    <figure className="px-10 pt-10">
-                        <img src={img2} alt="Shoes" className="rounded-xl" />
-                    </figure>
-                    <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E]  rounded-tr-lg">
-                        <p className="text-[#C3922E]">Apartamentos <br/> 2 habitaciones</p>
-                        <p>Zona: Barrio Norte</p>
-                        <p>$4500 mensuales</p>
-                    </div>
+  return (
+    <section className="container mx-auto px-4 py-8 md:py-16 lg:py-24">
+      <RentYourNew />
+      <div className="mt-8 md:mt-12">
+        <Mapa />
+      </div>
+      <div className="mt-8">
+        <p className="text-[#191A18] text-[24px] mb-4 md:mb-6">
+          Hemos encontrado 15 propiedades en la ubicación seleccionada
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+          {[img1, img2, img3, img4, img5, img6, img7, img8, img9].map((img, index) => (
+            <Link to="/detalle-de-vivienda" key={index}>
+              <div className="card cursor-pointer">
+                <figure className="px-6 pt-6 md:px-10 md:pt-10">
+                  <img src={img} alt={`Property ${index + 1}`} className="rounded-xl" />
+                </figure>
+                <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E] rounded-tr-lg p-4 md:p-6 lg:p-8">
+                  <p className="text-[#C3922E] mb-2 md:mb-4">Apartamentos <br /> 2 habitaciones</p>
+                  <p className="mb-2 md:mb-4">Zona: Barrio Norte</p>
+                  <p className="mb-2 md:mb-4">$5200 mensuales</p>
                 </div>
-                <div className="card w-50 cursor-pointer">
-                    <figure className="px-10 pt-10">
-                        <img src={img3} alt="Shoes" className="rounded-xl" />
-                    </figure>
-                    <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E]  rounded-tr-lg">
-                        <p className="text-[#C3922E]">Apartamentos <br/> 2 habitaciones</p>
-                        <p>Zona: Barrio Norte</p>
-                        <p>$4300 mensuales</p>
-                    </div>
-                </div>        
-            </div>
-            <div className="grid grid-cols-3 gap-16">
-                <div className="card w-50 cursor-pointer">
-                    <figure className="px-10 pt-10">
-                        <img src={img4} alt="Shoes" className="rounded-xl" />
-                    </figure>
-                    <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E]  rounded-tr-lg">
-                        <p className="text-[#C3922E]">Apartamentos <br/> 2 habitaciones</p>
-                        <p>Zona: Barrio Norte</p>
-                        <p>$4200 mensuales</p>
-                    </div>
-                </div>
-                <div className="card w-50 cursor-pointer">
-                    <figure className="px-10 pt-10">
-                        <img src={img5} alt="Shoes" className="rounded-xl" />
-                    </figure>
-                    <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E]  rounded-tr-lg">
-                        <p className="text-[#C3922E]">Apartamentos <br/> 2 habitaciones</p>
-                        <p>Zona: Barrio Norte</p>
-                        <p>$5000 mensuales</p>
-                    </div>
-                </div>
-                <div className="card w-50 cursor-pointer">
-                    <figure className="px-10 pt-10">
-                        <img src={img6} alt="Shoes" className="rounded-xl" />
-                    </figure>
-                    <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E]  rounded-tr-lg">
-                        <p className="text-[#C3922E]">Apartamentos <br/> 2 habitaciones</p>
-                        <p>Zona: Barrio Norte</p>
-                        <p>$4800 mensuales</p>
-                    </div>
-                </div>        
-            </div>
-            <div className="grid grid-cols-3 gap-16">
-                <div className="card w-50 cursor-pointer">
-                    <figure className="px-10 pt-10">
-                        <img src={img7} alt="Shoes" className="rounded-xl" />
-                    </figure>
-                    <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E]  rounded-tr-lg">
-                        <p className="text-[#C3922E]">Apartamentos <br/> 2 habitaciones</p>
-                        <p>Zona: Barrio Norte</p>
-                        <p>$4600 mensuales</p>
-                    </div>
-                </div>
-                <div className="card w-50 cursor-pointer">
-                    <figure className="px-10 pt-10">
-                        <img src={img8} alt="Shoes" className="rounded-xl" />
-                    </figure>
-                    <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E]  rounded-tr-lg">
-                        <p className="text-[#C3922E]">Apartamentos <br/> 2 habitaciones</p>
-                        <p>Zona: Barrio Norte</p>
-                        <p>$3900 mensuales</p>
-                    </div>
-                </div>
-                <div className="card w-50 cursor-pointer">
-                    <figure className="px-10 pt-10">
-                        <img src={img9} alt="Shoes" className="rounded-xl" />
-                    </figure>
-                    <div className="card-body items-center text-center bg-[#191A18] mt-5 border-2 border-[#C3922E]  rounded-tr-lg">
-                        <p className="text-[#C3922E]">Apartamentos <br/> 2 habitaciones</p>
-                        <p>Zona: Barrio Norte</p>
-                        <p>$4000 mensuales</p>
-                    </div>
-                </div>        
-            </div>
-            <div className="ml-[500px] ">
-                <button className="btn  bg-[#DE7E1F] w-[347px] h-[62px] mt-5 ">Ver más resultados</button>
-            </div>
-             <br/>
+              </div>
+            </Link>
+          ))}
         </div>
+      </div>
+      <div className="flex justify-center mt-8">
+        <button className="btn bg-[#DE7E1F] text-white w-full md:w-auto lg:w-[347px] h-[62px]">
+          Ver más resultados
+        </button>
+      </div>
     </section>
-    );
-  }
-  
-  export default CardsRentas;
+  );
+}
+
+export default CardsRentas;

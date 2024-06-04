@@ -8,6 +8,7 @@ import AgendaUnaVisita from '../pages/AgendaUnaVisita/AgendaUnaVisita';
 import PublícaTuPropiedad from '../pages/PublícaTuPropiedad/PublícaTuPropiedad';
 import DetalleVivienda from '../pages/DetalleVivienda/DetalleVivienda';
 import ConfirmaCita from '../pages/ConfirmaCita/ConfirmaCita';
+import ConfiguraciónPerfil from '../pages/ConfiguraciónPerfil/ConfiguraciónPerfil';
 
 
 const routes = createBrowserRouter([
@@ -38,8 +39,11 @@ const routes = createBrowserRouter([
     {
         path: "/publíca-tu-propiedad",
         element: <PageLayout> <PublícaTuPropiedad /> </PageLayout>  
+    },
+    {
+        path: "/configuración-de-perfil",
+        element: <PageLayout> <ConfiguraciónPerfil /> </PageLayout>  
     }
-    
 ]);
 
 const Navigation = () => {

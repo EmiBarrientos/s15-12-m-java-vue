@@ -9,9 +9,9 @@ import img6 from '../MásPropiedadesCard/assets/img6.png';
 const MásPropiedadesCard = () => {
   return (
     <section className="mt-9">
-      <div class="w-full sm:w-[447px] h-auto gap-16 bg-yellow-300 mx-auto md:ml-[250px] rounded-md px-4 py-6 md:p-8">
-        <h1 class="text-black text-lg font-bold">Inmuebles</h1>
-        <h2 class="text-black text-3xl font-bold">Más propiedades en tu ciudad</h2>
+      <div className="w-full sm:w-[447px] h-auto gap-16 bg-yellow-300 mx-auto md:ml-[250px] rounded-md px-4 py-6 md:p-8">
+        <h1 className="text-black text-lg font-bold">Inmuebles</h1>
+        <h2 className="text-black text-3xl font-bold">Más propiedades en tu ciudad</h2>
       </div>
       <div className="mt-9 flex flex-wrap justify-center items-start">
         <div className="w-[499px] h-[212px] mt-20 mr-9">

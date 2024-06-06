@@ -1,7 +1,10 @@
 package com.nc.Propiedades360.resources.Cliente.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nc.Propiedades360.resources.inmueble.entity.Inmueble;
 import com.nc.Propiedades360.resources.pago.entity.Pago;
+import com.nc.Propiedades360.resources.reserva.entity.Reserva;
+import com.nc.Propiedades360.resources.visita.entity.Visita;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,5 +36,14 @@ public class Cliente {
 
     @Column(nullable = false)
     private String telefono;
+
+    @JsonManagedReference(value = "cliente-reservas")
+    @OneToMany(targetEntity = Reserva.class, fetch = FetchType.LAZY, mappedBy = "cliente")
+    private List<Reserva> reservas;
+
+    @JsonManagedReference(value = "cliente-visitas")
+    @OneToMany(targetEntity = Visita.class, fetch = FetchType.LAZY, mappedBy = "cliente")
+    private List<Visita> visitas;
+
 
 }

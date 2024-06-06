@@ -9,8 +9,10 @@ import PublícaTuPropiedad from '../pages/PublícaTuPropiedad/PublícaTuPropieda
 import DetalleVivienda from '../pages/DetalleVivienda/DetalleVivienda';
 import ConfirmaCita from '../pages/ConfirmaCita/ConfirmaCita';
 import CaracteristicasPropiedad from '../components/CaracteristicasPropiedad/CaracteristicasPropiedad';
-
-
+import ConfiguraciónPerfil from '../pages/ConfiguraciónPerfil/ConfiguraciónPerfil';
+import PagoAlquiler from '../pages/PagoAlquiler/PagoAlquiler';
+import RevisaTuPago from '../pages/RevisaTuPago/RevisaTuPago';
+import OrdenDePago from '../pages/OrdenDePago/OrdenDePago';
 
 const routes = createBrowserRouter([
     {
@@ -45,11 +47,26 @@ const routes = createBrowserRouter([
         path: "/caracteristicas-de-propiedad",
         element: <PageLayout><CaracteristicasPropiedad/></PageLayout>
     },
-    
+    {
+        path: "/configuración-de-perfil",
+        element: <PageLayout> <ConfiguraciónPerfil /> </PageLayout>  
+    },
+    {
+        path: "/pago-de-alquiler",
+        element: <PageLayout> <PagoAlquiler /> </PageLayout>  
+    },
+    {
+        path: "/revisa-tu-pago",
+        element: <PageLayout> <RevisaTuPago /> </PageLayout>  
+    },
+    {
+        path: "/orden-de-pago",
+        element: <PageLayout> <OrdenDePago /> </PageLayout>  
+    }
 ]);
 
 const Navigation = () => {
     return <RouterProvider router={routes} />;
-  };
-  
+};
+
 export default Navigation;

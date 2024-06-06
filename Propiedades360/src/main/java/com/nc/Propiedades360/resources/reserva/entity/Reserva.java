@@ -1,10 +1,11 @@
 package com.nc.Propiedades360.resources.reserva.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.nc.Propiedades360.resources.Cliente.Entity.Cliente;
+import com.nc.Propiedades360.resources.inmueble.entity.Inmueble;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -12,6 +13,9 @@ import java.time.LocalDate;
 @Data
 @Getter
 @Setter
+@Table(name = "reserva")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Reserva {
 
     @Id
@@ -20,8 +24,18 @@ public class Reserva {
 
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    private Long clienteId;
-    private Long inmuebleId;
+
+    @JsonBackReference(value = "cliente-reservas")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @JsonBackReference(value = "inmueble-reservas")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inmueble_id")
+    private Inmueble inmueble;
+
+
 
     @Enumerated(EnumType.STRING)
     private Estado estado;

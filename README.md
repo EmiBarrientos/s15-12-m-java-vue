@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-# s15-12-m-java-vue
-=======
+
 # Propiedades360
 
 Propiedades360 es una aplicación para gestionar reservas y visitas de inmuebles.
@@ -48,4 +46,4 @@ Si deseas contribuir a este proyecto, ¡te damos la bienvenida! Por favor, sigue
 Si encuentras algún problema o tienes alguna pregunta, por favor abre un issue en este repositorio y te ayudaremos.
 
 ¡Gracias por utilizar Propiedades360!
->>>>>>> trabajoBackedn
+

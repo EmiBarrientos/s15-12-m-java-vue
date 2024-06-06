@@ -36,7 +36,7 @@ public class Propietario {
     @Column(nullable = false)
     private String telefono;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "propietario-inmuebles")
     @OneToMany(targetEntity = Inmueble.class, fetch = FetchType.LAZY, mappedBy = "propietario")
     private List<Inmueble> inmuebles;
 

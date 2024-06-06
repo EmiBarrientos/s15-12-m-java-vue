@@ -8,11 +8,11 @@ import AgendaUnaVisita from '../pages/AgendaUnaVisita/AgendaUnaVisita';
 import PublícaTuPropiedad from '../pages/PublícaTuPropiedad/PublícaTuPropiedad';
 import DetalleVivienda from '../pages/DetalleVivienda/DetalleVivienda';
 import ConfirmaCita from '../pages/ConfirmaCita/ConfirmaCita';
+import CaracteristicasPropiedad from '../components/CaracteristicasPropiedad/CaracteristicasPropiedad';
 import ConfiguraciónPerfil from '../pages/ConfiguraciónPerfil/ConfiguraciónPerfil';
 import PagoAlquiler from '../pages/PagoAlquiler/PagoAlquiler';
 import RevisaTuPago from '../pages/RevisaTuPago/RevisaTuPago';
 import OrdenDePago from '../pages/OrdenDePago/OrdenDePago';
-
 
 const routes = createBrowserRouter([
     {
@@ -44,6 +44,10 @@ const routes = createBrowserRouter([
         element: <PageLayout> <PublícaTuPropiedad /> </PageLayout>  
     },
     {
+        path: "/caracteristicas-de-propiedad",
+        element: <PageLayout><CaracteristicasPropiedad/></PageLayout>
+    },
+    {
         path: "/configuración-de-perfil",
         element: <PageLayout> <ConfiguraciónPerfil /> </PageLayout>  
     },
@@ -63,6 +67,6 @@ const routes = createBrowserRouter([
 
 const Navigation = () => {
     return <RouterProvider router={routes} />;
-  };
-  
+};
+
 export default Navigation;

@@ -1,8 +1,11 @@
 import React from 'react'
+import PublicacionPropiedad from '../../components/PublicacionPropiedad/PublicacionPropiedad';
 
 const PublícaTuPropiedad = () => {
   return (
-    <div>PublícaTuPropiedad</div>
+    <section className="bg-white">
+        <PublicacionPropiedad/>
+    </section>
   )
 }
 

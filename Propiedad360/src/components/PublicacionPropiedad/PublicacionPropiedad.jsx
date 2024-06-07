@@ -92,7 +92,7 @@ const PublicacionPropiedad = () => {
             </div>
             
             <div className="w-full ml-7 mt-4">
-               <input type="text" placeholder="     Ingresa dirección"  className="w-[1080px] h-[49px] bg-white border border-customColor4 rounded-md text-customColor" />  
+               <input type="text" placeholder="Ingresa dirección"  className="input w-[1080px] h-[49px] bg-white border border-customColor4 rounded-md text-customColor" />  
             </div>             
         </div>
 

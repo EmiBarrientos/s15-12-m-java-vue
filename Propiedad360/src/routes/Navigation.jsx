@@ -13,6 +13,7 @@ import ConfiguraciónPerfil from '../pages/ConfiguraciónPerfil/ConfiguraciónPe
 import PagoAlquiler from '../pages/PagoAlquiler/PagoAlquiler';
 import RevisaTuPago from '../pages/RevisaTuPago/RevisaTuPago';
 import OrdenDePago from '../pages/OrdenDePago/OrdenDePago';
+import CaracteristicasPropiedadVista from '../components/CaracteristicasPropiedadVista/CaracteristicasPropiedadVista';
 
 const routes = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const routes = createBrowserRouter([
     {
         path: "/caracteristicas-de-propiedad",
         element: <PageLayout><CaracteristicasPropiedad/></PageLayout>
+    },
+    {
+        path: "/caracteristicas-de-propiedad-vista",
+        element: <PageLayout><CaracteristicasPropiedadVista/></PageLayout>
     },
     {
         path: "/configuración-de-perfil",

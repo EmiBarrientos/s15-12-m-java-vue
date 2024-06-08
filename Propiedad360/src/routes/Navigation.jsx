@@ -15,6 +15,7 @@ import RevisaTuPago from '../pages/RevisaTuPago/RevisaTuPago';
 import OrdenDePago from '../pages/OrdenDePago/OrdenDePago';
 import CaracteristicasPropiedadVista from '../components/CaracteristicasPropiedadVista/CaracteristicasPropiedadVista';
 import RevisionPublicacion from '../components/RevisionPublicacion/RevisionPublicacion';
+import PublicacionExitosa from '../components/PublicacionExitosa/PublicacionExitosa';
 
 const routes = createBrowserRouter([
     {
@@ -72,6 +73,10 @@ const routes = createBrowserRouter([
     {
         path: "/revision-publicacion",
         element: <PageLayout> <RevisionPublicacion/></PageLayout>  
+    },
+    {
+        path: "/publicacion-exitosa",
+        element: <PageLayout> <PublicacionExitosa/></PageLayout>  
     }
 ]);
 

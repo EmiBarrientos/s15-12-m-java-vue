@@ -169,10 +169,7 @@ const RevisionPublicacion = () => {
                 </div>
                
             </div>
-
-
-
-           
+  
         </div>
      </section>
     )

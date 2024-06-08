@@ -1,7 +1,7 @@
 import React from 'react'
 import PublicacionPropiedad from '../../components/PublicacionPropiedad/PublicacionPropiedad';
 
-const PublícaTuPropiedad = () => {
+const PublicaTuPropiedad = () => {
   return (
     <section className="bg-white">
         <PublicacionPropiedad/>
@@ -9,4 +9,4 @@ const PublícaTuPropiedad = () => {
   )
 }
 
-export default PublícaTuPropiedad;
+export default PublicaTuPropiedad;

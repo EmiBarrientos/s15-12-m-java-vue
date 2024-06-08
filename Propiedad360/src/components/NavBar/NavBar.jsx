@@ -23,7 +23,7 @@ const NavBar = () => {
           <Link to="/comprar" className="btn btn-ghost text-xl">Compra</Link>
           <Link to="/renta" className="btn btn-ghost text-xl">Renta</Link>
           <Link to="/agenda-una-visita" className="btn btn-ghost text-xl">Agenda una visita</Link>
-          <Link to="/publíca-tu-propiedad" className="btn btn-ghost text-xl">Publíca tu propiedad</Link>
+          <Link to="/publica-tu-propiedad" className="btn btn-ghost text-xl">Publica tu propiedad</Link>
         </div>
         <div className="navbar-end flex items-center">
           <button className="btn btn-ghost btn-circle lg:hidden" onClick={toggleMenu}>
@@ -49,7 +49,7 @@ const NavBar = () => {
             <Link to="/comprar" className="btn btn-ghost text-xl" onClick={toggleMenu}>Compra</Link>
             <Link to="/renta" className="btn btn-ghost text-xl" onClick={toggleMenu}>Renta</Link>
             <Link to="/agenda-una-visita" className="btn btn-ghost text-xl" onClick={toggleMenu}>Agenda una visita</Link>
-            <Link to="/publíca-tu-propiedad" className="btn btn-ghost text-xl" onClick={toggleMenu}>Publíca tu propiedad</Link>
+            <Link to="/publica-tu-propiedad" className="btn btn-ghost text-xl" onClick={toggleMenu}>Publica tu propiedad</Link>
           </div>
         </div>
       )}

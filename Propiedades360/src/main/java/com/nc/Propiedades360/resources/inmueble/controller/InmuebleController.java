@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/inmueble")
 public class InmuebleController {
     private InmuebleService inmuebleService;
@@ -20,48 +20,57 @@ public class InmuebleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Inmueble>> getAllProperties() {
+    public ResponseEntity<List<Inmueble>> getAllInmuebles() {
         List<Inmueble> inmuebles = inmuebleService.findAll();
         return ResponseEntity.ok(inmuebles);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Inmueble> getPropertyById(@PathVariable Long id) {
+    public ResponseEntity<Inmueble> getInmuebleById(@PathVariable Long id) {
         Inmueble inmueble = inmuebleService.findById(id);
         return ResponseEntity.ok(inmueble);
     }
 
     @PostMapping
     public ResponseEntity<Inmueble> createInmueble(@RequestBody Inmueble inmueble) {
+        // Validar datos del inmueble antes de guardarlo (opcional)
         Inmueble newInmueble = inmuebleService.save(inmueble);
         return ResponseEntity.ok(newInmueble);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Inmueble> updateProperty(@PathVariable Long id, @RequestBody Inmueble propertyDetails) {
+    public ResponseEntity<Inmueble> updateInmueble(@PathVariable Long id, @RequestBody Inmueble propertyDetails) {
         Inmueble updatedInmueble = inmuebleService.findById(id);
-        updatedInmueble.setTipo(propertyDetails.getTipo());
-        updatedInmueble.setDireccion(propertyDetails.getDireccion());
-        updatedInmueble.setFoto(propertyDetails.getFoto());
+        // Actualizar campos según la entidad Inmueble modificada
+        updatedInmueble.setPerfilUsuario(propertyDetails.getPerfilUsuario());
+        updatedInmueble.setTipoOperacion(propertyDetails.getTipoOperacion());
+        updatedInmueble.setTipoInmueble(propertyDetails.getTipoInmueble());
+        updatedInmueble.setUbicacion(propertyDetails.getUbicacion());
+        updatedInmueble.setNumeroRecamaras(propertyDetails.getNumeroRecamaras());
+        updatedInmueble.setNumeroBanios(propertyDetails.getNumeroBanios());
+        updatedInmueble.setSuperficieConstruida(propertyDetails.getSuperficieConstruida());
+        updatedInmueble.setSuperficieTerreno(propertyDetails.getSuperficieTerreno());
+        updatedInmueble.setAntiguedad(propertyDetails.getAntiguedad());
+        updatedInmueble.setMantenimiento(propertyDetails.getMantenimiento());
+        updatedInmueble.setTitulo(propertyDetails.getTitulo());
+        updatedInmueble.setDescripcion(propertyDetails.getDescripcion());
+        updatedInmueble.setUrlVideo(propertyDetails.getUrlVideo());
+        //updatedInmueble.setEstado(propertyDetails.getEstado());
+        // Manejar la actualización de la imagen (foto) si es necesario
         updatedInmueble.setPrecio(propertyDetails.getPrecio());
-        updatedInmueble.setNumeroDeHabitaciones(propertyDetails.getNumeroDeHabitaciones());
-        updatedInmueble.setNumeroDeBanios(propertyDetails.getNumeroDeBanios());
-        updatedInmueble.setEstado(propertyDetails.getEstado());
-        updatedInmueble.setSuperficie(propertyDetails.getSuperficie());
-        updatedInmueble.setDatosDeContacto(propertyDetails.getDatosDeContacto());
         Inmueble savedInmueble = inmuebleService.save(updatedInmueble);
         return ResponseEntity.ok(savedInmueble);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteInmueble(@PathVariable Long id) {
         inmuebleService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/actualizarEstado/{id}")
+    /*@PutMapping("/actualizarEstado/{id}")
     public ResponseEntity<Void> actualizarEstadoInmueble(@PathVariable Long id, @RequestBody String estado) {
         inmuebleService.updateEstado(id, estado);
         return ResponseEntity.ok().build();
-    }
+    }*/
 }

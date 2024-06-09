@@ -9,6 +9,7 @@ import com.nc.Propiedades360.resources.pago.entity.Pago;
 import com.nc.Propiedades360.resources.pago.repository.PagoRepository;
 import com.nc.Propiedades360.resources.reserva.entity.Reserva;
 import com.nc.Propiedades360.resources.reserva.repository.ReservaRepository;
+import com.nc.Propiedades360.resources.reserva.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,7 +64,8 @@ public class ClienteService {
                 .orElseThrow(() -> new IllegalArgumentException("Inmueble no encontrado"));
 
         // Verificar si el inmueble está disponible para la reserva
-        if (!inmuebleExistente.getEstado().equalsIgnoreCase("Disponible")) {
+        ReservaService reservaService = new ReservaService(reservaRepository);
+        if (reservaService.confirmarReserva(inmuebleExistente.getId())) {
             throw new IllegalStateException("El inmueble no está disponible para reserva");
         }
 
@@ -71,15 +73,15 @@ public class ClienteService {
         Reserva reserva = new Reserva();
         reserva.setFechaInicio(fechaInicio);
         reserva.setFechaFin(fechaFin);
-        reserva.setClienteId(clienteExistente.getId());
-        reserva.setInmuebleId(inmuebleExistente.getId());
+        reserva.setCliente(clienteExistente);
+        reserva.setInmueble(inmuebleExistente);
         reserva.setEstado(Reserva.Estado.PENDIENTE);
 
         // Guardar la reserva
         reservaRepository.save(reserva);
 
         // Actualizar el estado del inmueble a no disponible
-        inmuebleExistente.setEstado("Reservado");
+        reserva.setEstado(Reserva.Estado.CONFIRMADA);
         inmuebleRepository.save(inmuebleExistente);
     }
 

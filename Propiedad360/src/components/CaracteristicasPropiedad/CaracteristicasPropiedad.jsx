@@ -68,7 +68,7 @@ const CaracteristicasPropiedad = () => {
 
                     <div className="flex justify-row bg-[#F9F9F9] w-[320px] h-[86px] rounded-[16px] border-[1px] border-customColor mt-2">
                         <button className="w-[66px] h-[58px] rounded-[16px] mt-3 ml-4 bg-[#D9D9D9] text-[24px] text-customColor ">m2</button>
-                        <p className="text-[24px] text-customColor mt-5 ml-20">0</p>   
+                        <input placeholder="0" className="w-[186px] h-[60px]  mt-3 ml-4 bg-[#F9F9F9] text-[24px] text-customColor text-center place-content-center placeholder:text-customColor "></input> 
                     </div>
 
                 </div>
@@ -80,7 +80,7 @@ const CaracteristicasPropiedad = () => {
 
                     <div className="flex justify-row bg-[#F9F9F9] w-[320px] h-[86px] rounded-[16px] border-[1px] border-customColor mt-2">
                         <button className="w-[66px] h-[58px] rounded-[16px] mt-3 ml-4 bg-[#D9D9D9] text-[24px] text-customColor ">m2</button>
-                        <p className="text-[24px] text-customColor mt-5 ml-20">0</p>
+                        <input placeholder="0" className="w-[186px] h-[60px]  mt-3 ml-4 bg-[#F9F9F9] text-[24px] text-customColor text-center place-content-center placeholder:text-customColor "></input> 
                         
                     </div>
                 </div>
@@ -118,7 +118,7 @@ const CaracteristicasPropiedad = () => {
 
                     <div className="flex justify-row bg-[#F9F9F9] w-[320px] h-[86px] rounded-[16px] border-[1px] border-customColor mt-2">
                         <button className="w-[66px] h-[58px] rounded-[16px] mt-3 ml-4 bg-[#D9D9D9] text-[24px] text-customColor ">$</button>
-                        <p className="text-[24px] text-customColor mt-5 ml-20">0</p>   
+                        <input placeholder="0" className="w-[186px] h-[60px]  mt-3 ml-4 bg-[#F9F9F9] text-[24px] text-customColor text-center place-content-center placeholder:text-customColor "></input>    
                     </div>
 
                 </div>
@@ -130,7 +130,7 @@ const CaracteristicasPropiedad = () => {
 
                     <div className="flex justify-row bg-[#F9F9F9] w-[320px] h-[86px] rounded-[16px] border-[1px] border-customColor mt-2">
                         <button className="w-[66px] h-[58px] rounded-[16px] mt-3 ml-4 bg-[#D9D9D9] text-[24px] text-customColor ">$</button>
-                        <p className="text-[24px] text-customColor mt-5 ml-20">0</p>
+                        <input placeholder="0" className="w-[186px] h-[60px]  mt-3 ml-4 bg-[#F9F9F9] text-[24px] text-customColor text-center place-content-center placeholder:text-customColor "></input> 
                         
                     </div>
                 </div>
@@ -147,14 +147,14 @@ const CaracteristicasPropiedad = () => {
                 </p>
 
                 <div className="w-full ml-9 mt-4">
-                  <input type="text" placeholder=" Completar el título de tú anuncio"  className="w-[1080px] h-[49px] bg-white border border-customColor4 rounded-md text-customColor" />  
+                  <input type="text" placeholder="Completar el título de tú anuncio"  className="input w-[1080px] h-[49px] bg-white border border-customColor4 rounded-md text-customColor " />  
                </div>
 
                <p className="text-[26px] text-customColor font-bold ml-12 mt-10">
                   Descripción
                 </p>
 
-                <textarea placeholder=" Escribe un minimo de 150 caracteres" className="textarea textarea-bordered textarea-sm w-[1081px] h-[272px] ml-7 mt-4 bg-[#F9F9F9]" ></textarea>
+                <textarea placeholder=" Escribe un minimo de 150 caracteres" className="textarea textarea-bordered textarea-sm w-[1081px] h-[272px] ml-7 mt-4 bg-[#F9F9F9] text-customColor" ></textarea>
 
             </div>
 
@@ -163,11 +163,6 @@ const CaracteristicasPropiedad = () => {
                     <button className="btn  bg-[#DE7E1F] text-white w-[208px] h-[62px] rounded-[16px] ">Continuar</button>
                 </Link>  
            </div>
-
-
-
-
-
 
         </div>
      </section>

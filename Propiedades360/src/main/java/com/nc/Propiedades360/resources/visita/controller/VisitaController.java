@@ -7,37 +7,47 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/visitas")
 public class VisitaController {
 
+    private final VisitaService visitaService;
+
     @Autowired
-    private VisitaService visitaService;
+    public VisitaController(VisitaService visitaService) {
+        this.visitaService = visitaService;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Visita>> getAllVisits() {
+        List<Visita> visitas = visitaService.findAll();
+        return ResponseEntity.ok(visitas);
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Visita> detalleVisita(@PathVariable Long id) {
-        Optional<Visita> visita = visitaService.findById(id);
-        return visita.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Visita> getVisitById(@PathVariable Long id) {
+        Visita visita = visitaService.findById(id);
+        return ResponseEntity.ok(visita);
     }
 
-    @PostMapping("/{id}/confirmar")
-    public ResponseEntity<Void> confirmarVisita(@PathVariable Long id) {
-        if (visitaService.confirmarVisita(id)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PostMapping("/create")
+    public ResponseEntity<Visita> createVisit(@RequestBody Visita visita) {
+        Visita newVisita = visitaService.crearVisita(visita);
+        return ResponseEntity.ok(newVisita);
     }
 
-    @PostMapping("/{id}/cancelar")
-    public ResponseEntity<Void> cancelarVisita(@PathVariable Long id) {
-        if (visitaService.cancelarVisita(id)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PutMapping("/{id}")
+    public ResponseEntity<Visita> updateVisit(@PathVariable Long id, @RequestBody Visita visitDetails) {
+        Visita updatedVisita = visitaService.actualizarVisita(visitDetails);
+        return ResponseEntity.ok(updatedVisita);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVisit(@PathVariable Long id) {
+        visitaService.eliminarVisita(id);
+        return ResponseEntity.noContent().build();
     }
 }

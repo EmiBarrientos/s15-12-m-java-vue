@@ -5,7 +5,7 @@ import Button from './Button/Button';
 
 const SearchProperties = () => {
   return (
-    <section>
+    <section className="pb-16">
         <ResultsTitle />
         <Mapa />
         <Button />

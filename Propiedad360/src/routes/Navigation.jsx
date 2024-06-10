@@ -15,10 +15,15 @@ import ConfiguraciónPerfil from '../pages/ConfiguraciónPerfil/ConfiguraciónPe
 import PagoAlquiler from '../pages/PagoAlquiler/PagoAlquiler';
 import RevisaTuPago from '../pages/RevisaTuPago/RevisaTuPago';
 import OrdenDePago from '../pages/OrdenDePago/OrdenDePago';
+import Login from '../pages/Login/Login';
 
 const routes = createBrowserRouter([
     {
         path: "/",
+        element: <PageLayout> <Login /> </PageLayout>
+    },
+    {
+        path: "/home",
         element: <PageLayout> <Home /> </PageLayout>
     },
     {

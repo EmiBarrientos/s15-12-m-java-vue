@@ -27,7 +27,7 @@ const SuccessfulPayment = () => {
       </div>
       <p className="text-black text-[24px] font-medium mt-8">Se envió un correo con la confirmación y detalles del pago, favor de revisarlo</p>
       <div className="mt-12 text-center">
-        <Link to="/">
+        <Link to="/home">
           <button className="btn btn-wide bg-buttonColor text-white border-none">Volver a inicio</button>
         </Link>
       </div>

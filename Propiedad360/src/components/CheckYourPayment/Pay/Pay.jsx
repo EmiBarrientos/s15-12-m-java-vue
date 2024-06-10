@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import maste from './assets/maste.png';
 
 const Pay = () => {
@@ -27,8 +28,10 @@ const Pay = () => {
         </div>
       </div>
       <div className="mt-8 flex space-x-12">
-        <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-buttonColor  text-white">Modificar método de pago</button>
-        <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-buttonColor2 text-white">Pagar</button>
+        <Link to="/configuración-de-perfil" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-buttonColor text-white">Modificar método de pago</Link>
+        <Link to="/orden-de-pago">
+          <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-buttonColor2 text-white">Pagar</button>
+        </Link>
       </div>
     </section>
   );

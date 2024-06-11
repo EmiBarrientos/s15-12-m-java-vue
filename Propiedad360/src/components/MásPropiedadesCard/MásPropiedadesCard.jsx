@@ -13,30 +13,28 @@ const MásPropiedadesCard = () => {
         <h1 className="text-black text-lg font-bold">Inmuebles</h1>
         <h2 className="text-black text-3xl font-bold">Más propiedades en tu ciudad</h2>
       </div>
-      <div className="mt-9 flex flex-wrap justify-center items-start">
-        <div className="w-[499px] h-[212px] mt-20 mr-9">
-          <img src={img1} alt="" className="w-full h-full object-cover" />
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="w-[237px] h-[218px]">
-            <img src={img2} alt="" className="w-full h-full object-cover" />
-          </div>
-          <div className="w-[237px] h-[218px] mt-4">
-            <img src={img3} alt="" className="w-full h-full object-cover" />
-          </div>
-        </div>
-        <div className="w-[291px] h-[454px] ml-8">
-          <img src={img4} alt="" className="w-full h-full object-cover" />
-        </div>
-        <div className="flex flex-col items-center ml-8">
-          <div className="w-[395px] h-[212px] mt-4">
-            <img src={img5} alt="" className="w-full h-full object-cover" />
-          </div>
-          <div className="w-[395px] h-[218px] mt-4">
-            <img src={img6} alt="" className="w-full h-full object-cover" />
-          </div>
-        </div>
-      </div>
+      <div className="flex flex-nowrap justify-center">
+                <div className="w-[460px] h-[402px]">
+                    <div className="flex flex-col ...">
+                        <div className="mt-4"> <img src={img1}  /></div>
+                        <div>
+                            <div className="flex flex-row mt-5 h-[193px]">
+                                <div className=""><img src={img2}  /></div>
+                                <div className="ml-12"><img src={img3}  /></div>     
+                            </div>
+                        </div>     
+                    </div>
+                </div>
+                <div className="ml-12 w-[268px] h-[402px] mt-4">
+                   <img src={img4}  /> 
+                </div>
+                <div>
+                    <div className="flex flex-col w-[364px] h-[402px] ml-12 mt-4">
+                        <div className=""><img src={img5}  /></div>
+                        <div className="mt-5"><img src={img6}  /></div>     
+                    </div>
+                </div>
+            </div>
     </section>
   );
 };

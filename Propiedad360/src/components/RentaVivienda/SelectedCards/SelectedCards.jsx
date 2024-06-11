@@ -16,54 +16,51 @@ import image12 from './assets/image12.png';
 const SelectedCards = () => {
   return (
     <section className="mt-3">
-      <div className="mt-9 flex flex-wrap justify-center items-start">
-        <div className="w-[499px] h-[212px] mt-20 mr-9">
-          <img src={image1} alt="" className="w-full h-full object-cover" />
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="w-[237px] h-[218px]">
-            <img src={image2} alt="" className="w-full h-full object-cover" />
-          </div>
-          <div className="w-[237px] h-[218px] mt-4">
-            <img src={image3} alt="" className="w-full h-full object-cover" />
-          </div>
-        </div>
-        <div className="w-[291px] h-[454px] ml-8">
-          <img src={image4} alt="" className="w-full h-full object-cover" />
-        </div>
-        <div className="flex flex-col items-center ml-8">
-          <div className="w-[395px] h-[212px] mt-4">
-            <img src={image5} alt="" className="w-full h-full object-cover" />
-          </div>
-          <div className="w-[395px] h-[218px] mt-4">
-            <img src={image6} alt="" className="w-full h-full object-cover" />
-          </div>
-        </div>
-      </div>
-      <div className="mt-9 flex flex-wrap justify-center items-start">
-        <div className="w-[499px] h-[212px] mt-20 mr-9">
-          <img src={image7} alt="" className="w-full h-full object-cover" />
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="w-[237px] h-[218px]">
-            <img src={image8} alt="" className="w-full h-full object-cover" />
-          </div>
-          <div className="w-[237px] h-[218px] mt-4">
-            <img src={image9} alt="" className="w-full h-full object-cover" />
-          </div>
-        </div>
-        <div className="w-[291px] h-[454px] ml-8">
-          <img src={image10} alt="" className="w-full h-full object-cover" />
-        </div>
-        <div className="flex flex-col items-center ml-8">
-          <div className="w-[395px] h-[212px] mt-4">
-            <img src={image11} alt="" className="w-full h-full object-cover" />
-          </div>
-          <div className="w-[395px] h-[218px] mt-4">
-            <img src={image12} alt="" className="w-full h-full object-cover" />
-          </div>
-        </div>
-      </div>
+       <div className="flex flex-nowrap justify-center">
+                <div className="w-[460px] h-[402px]">
+                    <div className="flex flex-col ...">
+                        <div className="mt-4"> <img src={image1}  /></div>
+                        <div>
+                            <div className="flex flex-row mt-5 h-[193px]">
+                                <div className=""><img src={image2}  /></div>
+                                <div className="ml-12"><img src={image3}  /></div>     
+                            </div>
+                        </div>     
+                    </div>
+                </div>
+                <div className="ml-12 w-[268px] h-[402px] mt-4">
+                   <img src={image4}  /> 
+                </div>
+                <div>
+                    <div className="flex flex-col w-[364px] h-[402px] ml-12 mt-4">
+                        <div className=""><img src={image5}  /></div>
+                        <div className="mt-5"><img src={image6}  /></div>     
+                    </div>
+                </div>
+            </div>
+            <div className="flex flex-nowrap justify-center mt-9">
+                <div className="w-[460px] h-[402px]">
+                    <div className="flex flex-col ...">
+                        <div className="mt-4"> <img src={image7}  /></div>
+                        <div>
+                            <div className="flex flex-row mt-5 h-[193px]">
+                                <div className=""><img src={image8}  /></div>
+                                <div className="ml-12"><img src={image9}  /></div>     
+                            </div>
+                        </div>     
+                    </div>
+                </div>
+                <div className="ml-12 w-[268px] h-[402px] mt-4">
+                   <img src={image10}  /> 
+                </div>
+                <div>
+                    <div className="flex flex-col w-[364px] h-[402px] ml-12 mt-4">
+                        <div className=""><img src={image11}  /></div>
+                        <div className="mt-5"><img src={image12}  /></div>     
+                    </div>
+                   
+                </div>
+            </div>
     </section>
   )
 }

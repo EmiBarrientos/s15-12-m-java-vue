@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PageLayout from '../layout/PageLayout';
+import Login from '../pages/Login/Login';
 import Home from '../pages/Home/Home';
 import BuscarPropiedades from '../pages/BuscarPropiedades/BuscarPropiedades';
 import ResultadosObtenidos from '../pages/ResultadosObtenidos/ResultadosObtenidos'

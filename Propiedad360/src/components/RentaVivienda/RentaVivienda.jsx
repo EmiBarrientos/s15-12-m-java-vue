@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaSearch } from 'react-icons/fa';
 import  RentYourNew from '../RentYourNew/RentYourNew'
 import SelectedCards from './SelectedCards/SelectedCards'; 
 import Descripción from './Descripción/Descripción';

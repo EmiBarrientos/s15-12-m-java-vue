@@ -1,7 +1,7 @@
 import React from 'react';
 import { APIProvider, Map as GoogleMap, Marker } from '@vis.gl/react-google-maps';
 
-const API_KEY = "AIzaSyCl7oLs_m4NMrswGkW3-QauvPoUfjDMgK8"
+const API_KEY = 'AIzaSyCl7oLs_m4NMrswGkW3-QauvPoUfjDMgK8';
 
 const Map = () => {
   return (
@@ -10,12 +10,12 @@ const Map = () => {
         <div style={{ width: '1140px', height: '432px' }}>
           <GoogleMap
             style={{ width: '100%', height: '100%' }}
-            defaultCenter={{ lat: -34.5922, lng: -58.4064 }}
-            defaultZoom={15}
+            defaultCenter={{ lat: -34.6072, lng: -58.3688 }}
+            defaultZoom={11}
             gestureHandling={'greedy'}
             disableDefaultUI={true}
           >
-            <Marker position={{ lat: -34.5922, lng: -58.4064 }} />
+            <Marker position={{ lat: -34.6072, lng: -58.3688 }} /> 
           </GoogleMap>
         </div>
       </APIProvider>

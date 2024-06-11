@@ -1,7 +1,10 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PageLayout from '../layout/PageLayout';
+import Login from '../pages/Login/Login';
 import Home from '../pages/Home/Home';
+import BuscarPropiedades from '../pages/BuscarPropiedades/BuscarPropiedades';
+import ResultadosObtenidos from '../pages/ResultadosObtenidos/ResultadosObtenidos'
 import Comprar from '../pages/Comprar/Comprar';
 import Renta from '../pages/Renta/Renta';
 import AgendaUnaVisita from '../pages/AgendaUnaVisita/AgendaUnaVisita';
@@ -21,7 +24,20 @@ import RevisionAnuncio from '../components/RevisionAnuncio/RevisionAnuncio';
 const routes = createBrowserRouter([
     {
         path: "/",
+        element: <PageLayout> <Login /> </PageLayout>
+    },
+    {
+        path: "/home",
         element: <PageLayout> <Home /> </PageLayout>
+    },
+    {
+        path: "/buscar-propiedades-en-zona",
+        element: <PageLayout> <BuscarPropiedades /> </PageLayout>
+    },
+    ,
+    {
+        path: "/resultados-obtenidos",
+        element: <PageLayout> <ResultadosObtenidos /> </PageLayout> 
     },
     {
         path: "/comprar",

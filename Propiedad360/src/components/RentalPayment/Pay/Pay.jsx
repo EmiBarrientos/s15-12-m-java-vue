@@ -26,7 +26,7 @@ const Pay = () => {
         
       </div>
       <div className="mt-8 flex space-x-28">
-        <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-buttonColor  text-white">Regresar</button>
+        <Link to="/configuración-de-perfil" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-buttonColor  text-white">Regresar</Link>
         <Link to="/revisa-tu-pago" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-buttonColor2 text-white text-center py-2 px-4 rounded">
           Confirmar
         </Link>

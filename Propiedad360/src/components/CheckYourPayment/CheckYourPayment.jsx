@@ -4,7 +4,7 @@ import Pay from './Pay/Pay';
 
 const CheckYourPayment = () => {
   return (
-    <section>
+    <section className="pb-16">
         <Title />
         <Pay />
     </section>

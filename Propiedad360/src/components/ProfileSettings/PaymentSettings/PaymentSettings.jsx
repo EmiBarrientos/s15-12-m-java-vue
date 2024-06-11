@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FaCreditCard, FaPlus, FaPen, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FaCreditCard, FaPlus, FaPen } from 'react-icons/fa';
 import tarjeta from './assets/tarjeta.png';
 import Modal from './Modal';
 import EditModal from './EditModal';
@@ -51,9 +52,11 @@ const PaymentSettings = () => {
           </div>
         </div>
         <div className="mt-16 flex justify-end mr-14">
-          <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-buttonColor text-white">
-            Pagar alquiler
-          </button>
+          <Link to="/pago-de-alquiler">
+            <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-buttonColor text-white">
+              Pagar alquiler
+            </button>
+          </Link>
         </div>
       </div>
       {showModal && <Modal isOpen={showModal} onClose={handleCloseModal} />}

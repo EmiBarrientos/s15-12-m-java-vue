@@ -62,22 +62,22 @@ const PublicacionPropiedad = () => {
         </p>
           
         <div className="bg-[#E0E0E0] w-[1142px] h-[776px] rounded-lg mt-6">
-            <select className="select select-bordered bg-white text-black w-[1059px] mt-9 mx-8 ">
-              <option className="text-black text-lg md:text-xl lg:text-2xl " disabled selected>Selecciona una opción</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Casa</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Departamento</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Edificio</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Oficina</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Rancho</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Quinta</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Terreno</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Lote</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Villa</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Dúplex</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Huerta</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Nave comercial</option>
-              <option className="text-black text-lg md:text-xl lg:text-2xl">Bodega</option>
-            </select>  
+          <select className="select select-bordered bg-white text-black w-[1059px] mt-9 mx-8 ">
+            <option value="" disabled className="text-black text-lg md:text-xl lg:text-2xl">Selecciona una opción</option>
+            <option value="casa" className="text-black text-lg md:text-xl lg:text-2xl">Casa</option>
+            <option value="departamento" className="text-black text-lg md:text-xl lg:text-2xl">Departamento</option>
+            <option value="edificio" className="text-black text-lg md:text-xl lg:text-2xl">Edificio</option>
+            <option value="oficina" className="text-black text-lg md:text-xl lg:text-2xl">Oficina</option>
+            <option value="rancho" className="text-black text-lg md:text-xl lg:text-2xl">Rancho</option>
+            <option value="quinta" className="text-black text-lg md:text-xl lg:text-2xl">Quinta</option>
+            <option value="terreno" className="text-black text-lg md:text-xl lg:text-2xl">Terreno</option>
+            <option value="lote" className="text-black text-lg md:text-xl lg:text-2xl">Lote</option>
+            <option value="villa" className="text-black text-lg md:text-xl lg:text-2xl">Villa</option>
+            <option value="duplex" className="text-black text-lg md:text-xl lg:text-2xl">Dúplex</option>
+            <option value="huerta" className="text-black text-lg md:text-xl lg:text-2xl">Huerta</option>
+            <option value="nave-comercial" className="text-black text-lg md:text-xl lg:text-2xl">Nave comercial</option>
+            <option value="bodega" className="text-black text-lg md:text-xl lg:text-2xl">Bodega</option>
+          </select>  
         </div> 
 
         <p className="text-[32px] text-customColor font-bold mt-12">
@@ -92,7 +92,7 @@ const PublicacionPropiedad = () => {
             </div>
             
             <div className="w-full ml-7 mt-4">
-               <input type="text" placeholder="     Ingresa dirección"  className="w-[1080px] h-[49px] bg-white border border-customColor4 rounded-md text-customColor" />  
+               <input type="text" placeholder="Ingresa dirección"  className="input w-[1080px] h-[49px] bg-white border border-customColor4 rounded-md text-customColor" />  
             </div>             
         </div>
 

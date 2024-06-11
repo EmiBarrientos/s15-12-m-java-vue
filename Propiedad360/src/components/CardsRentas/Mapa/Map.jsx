@@ -1,24 +1,26 @@
 import React from 'react';
-import { APIProvider, Map as GoogleMap } from '@vis.gl/react-google-maps';
+import { APIProvider, Map as GoogleMap, Marker } from '@vis.gl/react-google-maps';
 
-const API_KEY = 'TU_API_KEY'; // Reemplaza con tu propia API Key
+const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-
-const Mapa = () => {
+const Map = () => {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <APIProvider apiKey={API_KEY}>
         <div style={{ width: '1140px', height: '432px' }}>
           <GoogleMap
             style={{ width: '100%', height: '100%' }}
-            defaultCenter={{ lat: 22.54992, lng: 0 }}
-            defaultZoom={3}
+            defaultCenter={{ lat: -34.603851, lng: -58.381775 }}
+            defaultZoom={14}
             gestureHandling={'greedy'}
             disableDefaultUI={true}
-          />
+          >
+            <Marker position={{ lat: -34.603851, lng: -58.381775 }} />
+          </GoogleMap>
         </div>
       </APIProvider>
     </div>
   );
 };
-export default Mapa;
+
+export default Map;

@@ -14,7 +14,7 @@ const Confirmación = () => {
             <span className="text-black text-[20px] md:text-[24px] font-semibold text-center">Recibirá en su correo registrado los detalles de su visita, favor de revisarlos</span>
         </div>
         <div className="mt-12 text-center">
-            <Link to="/">
+            <Link to="/home">
                 <button className="btn btn-wide bg-buttonColor text-white">Volver a inicio</button>
             </Link>
         </div>

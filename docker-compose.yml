@@ -1,7 +1,7 @@
 
 services:
   propiedades360:
-    build: propiedades360
+    build: Propiedades360
     ports:
       - "8080:8080"
     environment:
@@ -19,7 +19,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_PASSWORD: 
-      MYSQL_DATABASE: Propiedades360
+      MYSQL_DATABASE: propiedades360
     restart: always
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]

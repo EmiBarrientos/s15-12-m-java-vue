@@ -10,8 +10,9 @@ import java.util.Optional;
 
 @Service
 public class InmuebleService {
-    private InmuebleRepository inmuebleRepository;
+    private final InmuebleRepository inmuebleRepository;
 
+    @Autowired
     public InmuebleService(InmuebleRepository inmuebleRepository) {
         this.inmuebleRepository = inmuebleRepository;
     }
@@ -25,6 +26,8 @@ public class InmuebleService {
                 .orElseThrow(() -> new RuntimeException("Inmueble no encontrado"));
     }
 
+    // Validación de datos para el inmueble (agregar si es necesario)
+
     public Inmueble save(Inmueble inmueble) {
         return inmuebleRepository.save(inmueble);
     }
@@ -33,10 +36,10 @@ public class InmuebleService {
         inmuebleRepository.deleteById(id);
     }
 
-    public Inmueble updateEstado(Long id, String estado) {
+    /*public Inmueble updateEstado(Long id, String estado) {
         Inmueble inmueble = inmuebleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inmueble no encontrado"));
         inmueble.setEstado(estado);
         return inmuebleRepository.save(inmueble);
-    }
+    }*/
 }

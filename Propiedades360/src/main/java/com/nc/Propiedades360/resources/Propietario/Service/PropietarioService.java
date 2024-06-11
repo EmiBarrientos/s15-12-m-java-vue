@@ -22,7 +22,10 @@ public class PropietarioService {
         this.propietarioRepository = propietarioRepository;
     }
 
+    // Validación de datos para el propietario (agregar si es necesario)
+
     public Propietario savePropietario(Propietario propietario) {
+        // Validar datos del propietario antes de guardarlo
         return propietarioRepository.save(propietario);
     }
 
@@ -35,6 +38,8 @@ public class PropietarioService {
     public Inmueble publicarInmueble(Inmueble inmueble, Long propietarioId) {
         Propietario propietario = propietarioRepository.findById(propietarioId)
                 .orElseThrow(() -> new RuntimeException("Propietario no encontrado"));
+
+        // Validar datos del inmueble antes de guardarlo
         inmueble.setPropietario(propietario);
         return inmuebleRepository.save(inmueble);
     }
@@ -44,14 +49,22 @@ public class PropietarioService {
         Inmueble inmueble = inmuebleRepository.findById(inmuebleId)
                 .orElseThrow(() -> new RuntimeException("Inmueble no encontrado"));
 
-        inmueble.setTipo(inmuebleDetalles.getTipo());
+        // Validar datos del inmueble antes de actualizarlo
+        inmueble.setTipoInmueble(inmuebleDetalles.getTipoInmueble());
+        inmueble.setUbicacion(inmuebleDetalles.getUbicacion());
+        inmueble.setTipoOperacion(inmuebleDetalles.getTipoOperacion());
         inmueble.setFoto(inmuebleDetalles.getFoto());
         inmueble.setPrecio(inmuebleDetalles.getPrecio());
-        inmueble.setNumeroDeHabitaciones(inmuebleDetalles.getNumeroDeHabitaciones());
-        inmueble.setNumeroDeBanios(inmuebleDetalles.getNumeroDeBanios());
-        inmueble.setEstado(inmuebleDetalles.getEstado());
-        inmueble.setSuperficie(inmuebleDetalles.getSuperficie());
-        inmueble.setDatosDeContacto(inmuebleDetalles.getDatosDeContacto());
+        inmueble.setNumeroRecamaras(inmuebleDetalles.getNumeroRecamaras());
+        inmueble.setNumeroBanios(inmuebleDetalles.getNumeroBanios());
+        inmueble.setSuperficieConstruida(inmuebleDetalles.getSuperficieConstruida());
+        inmueble.setSuperficieTerreno(inmuebleDetalles.getSuperficieTerreno());
+        inmueble.setAntiguedad(inmuebleDetalles.getAntiguedad());
+        inmueble.setMantenimiento(inmuebleDetalles.getMantenimiento());
+        inmueble.setTitulo(inmuebleDetalles.getTitulo());
+        inmueble.setDescripcion(inmuebleDetalles.getDescripcion());
+        inmueble.setUrlVideo(inmuebleDetalles.getUrlVideo());
+        inmueble.setFotoPlanos(inmuebleDetalles.getFotoPlanos());
 
         return inmuebleRepository.save(inmueble);
     }

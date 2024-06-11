@@ -2,6 +2,7 @@
 services:
   propiedades360:
     build: Propiedades360
+    mem_limit: 512m
     ports:
       - "8080:8080"
     environment:
@@ -13,7 +14,7 @@ services:
       prop360:
           condition: service_healthy
   prop360:
-    image: mysql:8.0.33 
+    image: mysql:8.0.31 
     ports:
       - "3307:3306"
     environment:

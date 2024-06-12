@@ -1,7 +1,5 @@
 FROM amazoncorretto:17-alpine-jdk
 
-ARG JAR_FILE=target/Propiedades360-0.0.1-SNAPSHOT.jar
+COPY target/Propiedades360-0.0.1-SNAPSHOT.jar app.jar
 
-COPY ${JAR_FILE} propiedades360.jar
-
-ENTRYPOINT ["java", "-jar", "/propiedades360.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]

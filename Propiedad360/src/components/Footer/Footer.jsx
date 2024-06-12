@@ -6,9 +6,9 @@ const Footer = () => {
         <footer className="footer p-10 bg-base-300 text-base-content">
         <nav>
             <h6 className="footer-title text-[24px] text-[#C3922E]">PROPIEDADES 360</h6> 
-            <a className="link link-hover text-[16px] text-white">Publibca tu propiedad</a>
-            <a className="link link-hover text-[16px] text-white">Soprte</a>
-            <a className="link link-hover text-[16px] text-white">Privaciodad</a>
+            <a className="link link-hover text-[16px] text-white">Publica tu propiedad</a>
+            <a className="link link-hover text-[16px] text-white">Soporte</a>
+            <a className="link link-hover text-[16px] text-white">Privacidad</a>
             <a className="link link-hover text-[16px] text-white">Precios por zona</a>
         </nav> 
         <nav>

@@ -17,7 +17,7 @@ const Testimonials = () => {
                   <img src={testimonio1} alt="Testimonio 1" />
                 </div>
               </div>
-              <p>“Propiedades 360 es un sitio web excepcional para encontrar inmuebles en venta o alquiler.,su interfaz es fácil de usar. Los listados son detallados con descripciones claras y fotografías de alta calidad. Definitivamente, un recurso valioso para cualquier persona interesada en el mercado inmobiliario.”</p>
+              <p>“Propiedades 360 es un sitio web excepcional para encontrar inmuebles en venta o alquiler. Su interfaz es fácil de usar y los listados son detallados con descripciones claras y fotografías de alta calidad. Definitivamente, un recurso valioso para cualquier persona interesada en el mercado inmobiliario.”</p>
               <div className="card-actions justify-start">
                 <span className="text-black text-2xl font-sans">Javier Artega</span>
               </div>
@@ -34,7 +34,7 @@ const Testimonials = () => {
                   <img src={testimonio2} alt="Testimonio 2" />
                 </div>
               </div>
-              <p>“Mi experiencia con Propiedades 360 fue excelente. Encontré un hogar  que se ajusta perfectamente a mis necesidades y presupuesto. El proceso de alquiler fue sencillo y transparente, Estoy muy satisfecha con mi nueva casa y  agradezco por hacer que este proceso fuera tan fácil y sin estrés”</p>
+              <p>“Mi experiencia con Propiedades 360 fue excelente. Encontré un hogar  que se ajusta perfectamente a mis necesidades y presupuesto. El proceso de alquiler fue sencillo y transparente. Estoy muy satisfecha con mi nueva casa y  agradezco por hacer que este proceso fuera tan fácil y sin estrés”</p>
               <div className="card-actions justify-start">
                 <span className="text-black text-2xl font-sans">Rebeca Ocampo</span>
               </div>

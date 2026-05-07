@@ -2,6 +2,7 @@ package com.nc.Propiedades360.resources.Usuario.Controller;
 
 import com.nc.Propiedades360.resources.Usuario.Entity.Usuario;
 import com.nc.Propiedades360.resources.Usuario.Service.UsuarioService;
+import com.nc.Propiedades360.resources.Usuario.dto.LoginDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +21,9 @@ public class UsuarioController {
     }
 
 
-    @PostMapping("/registrarse")
-    public Usuario registrarse(@RequestBody Usuario usuario) {
-        return usuarioService.registrarse(usuario);
-    }
-
     @PostMapping("/iniciar-sesion")
-    public Optional<Usuario> iniciarSesion(@RequestParam String email, @RequestParam String contrasena) {
-        return usuarioService.iniciarSesion(email, contrasena);
+    public Optional<Usuario> iniciarSesion(@RequestBody LoginDto dto) {
+        return usuarioService.iniciarSesion(dto.getEmail(), dto.getContrasena());
     }
 
     @PutMapping("/actualizar-perfil")
@@ -35,3 +31,15 @@ public class UsuarioController {
         return usuarioService.actualizarPerfil(usuario);
     }
 }
+
+/**
+ *
+ *
+ *   @PostMapping("/registrarse")
+ *     public Usuario registrarse(@RequestBody Usuario usuario) {
+ *         return usuarioService.registrarse(usuario);
+ *     }
+ *
+ *
+ *
+ * */

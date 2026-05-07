@@ -3,9 +3,11 @@ package com.nc.Propiedades360.resources.Cliente.Service;
 import com.nc.Propiedades360.resources.Cliente.Entity.Cliente;
 import com.nc.Propiedades360.resources.Cliente.Repository.ClienteRepository;
 import com.nc.Propiedades360.resources.Propietario.Entity.Propietario;
+import com.nc.Propiedades360.resources.Usuario.enums.Rol;
 import com.nc.Propiedades360.resources.inmueble.entity.Inmueble;
 import com.nc.Propiedades360.resources.inmueble.repository.InmuebleRepository;
 import com.nc.Propiedades360.resources.pago.entity.Pago;
+import com.nc.Propiedades360.resources.pago.enums.EstadoPago;
 import com.nc.Propiedades360.resources.pago.repository.PagoRepository;
 import com.nc.Propiedades360.resources.reserva.entity.Reserva;
 import com.nc.Propiedades360.resources.reserva.repository.ReservaRepository;
@@ -23,20 +25,22 @@ public class ClienteService {
     private final InmuebleRepository inmuebleRepository;
     private final ClienteRepository clienteRepository;
     private final ReservaRepository reservaRepository;
-
+    private final ReservaService reservaService;
     private final PagoRepository pagoRepository;
 
     // Inyección de dependencias a través del constructor
-    public ClienteService( InmuebleRepository inmuebleRepository, ClienteRepository clienteRepository, ReservaRepository reservaRepository, PagoRepository pagoRepository) {
+    public ClienteService(InmuebleRepository inmuebleRepository, ClienteRepository clienteRepository, ReservaRepository reservaRepository, ReservaService reservaService, PagoRepository pagoRepository) {
 
         this.inmuebleRepository = inmuebleRepository;
         this.clienteRepository = clienteRepository;
         this.reservaRepository = reservaRepository;
+        this.reservaService = reservaService;
         this.pagoRepository = pagoRepository;
     }
 
 
     public Cliente saveCliente(Cliente cliente) {
+        cliente.setRol(Rol.CLIENTE);
         return clienteRepository.save(cliente);
     }
 
@@ -64,7 +68,7 @@ public class ClienteService {
                 .orElseThrow(() -> new IllegalArgumentException("Inmueble no encontrado"));
 
         // Verificar si el inmueble está disponible para la reserva
-        ReservaService reservaService = new ReservaService(reservaRepository);
+
         if (reservaService.confirmarReserva(inmuebleExistente.getId())) {
             throw new IllegalStateException("El inmueble no está disponible para reserva");
         }
@@ -106,7 +110,7 @@ public class ClienteService {
         pago.setMetodoPago(metodoPago);
         pago.setClienteId(clienteId);
         pago.setReservaId(reservaId);
-        pago.setEstadoPago(Pago.EstadoPago.PENDIENTE);
+        pago.setEstadoPago(EstadoPago.COMPLETADO);
 
         // Guardar el pago
         pagoRepository.save(pago);
@@ -115,7 +119,7 @@ public class ClienteService {
         pago.procesarPago();
 
         // Actualizar el estado de la reserva a CONFIRMADA
-        if (pago.verificarEstadoPago() == Pago.EstadoPago.COMPLETADO) {
+        if (pago.verificarEstadoPago() == EstadoPago.COMPLETADO) {
             reserva.confirmarReserva();
             reservaRepository.save(reserva);
         }

@@ -1,6 +1,7 @@
 package com.nc.Propiedades360.resources.pago.entity;
 
 
+import com.nc.Propiedades360.resources.pago.enums.EstadoPago;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,11 +23,7 @@ public class Pago {
     @Enumerated(EnumType.STRING)
     private EstadoPago estadoPago;
 
-    public enum EstadoPago {
-        PENDIENTE,
-        FALLIDO,
-        COMPLETADO
-    }
+
 
 
     public void procesarPago() {

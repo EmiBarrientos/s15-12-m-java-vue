@@ -15,9 +15,7 @@ public class UsuarioService {
         this.usuarioRepository = repository;
     }
 
-    public Usuario registrarse(Usuario usuario) {
-        return usuarioRepository.save(usuario);
-    }
+
 
     public Optional<Usuario> iniciarSesion(String email, String contrasena) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
@@ -37,3 +35,13 @@ public class UsuarioService {
 
 
 }
+
+/*
+*
+*     public Usuario registrarse(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+*
+*
+*
+* */

@@ -3,19 +3,17 @@ package com.nc.Propiedades360.resources.inmueble.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nc.Propiedades360.resources.Propietario.Entity.Propietario;
+import com.nc.Propiedades360.resources.inmueble.enums.*;
 import com.nc.Propiedades360.resources.reserva.entity.Reserva;
 import com.nc.Propiedades360.resources.visita.entity.Visita;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Data
-@Getter
-@Setter
+@EqualsAndHashCode(exclude = {"visitas","reservas"})
 public class Inmueble {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +30,9 @@ public class Inmueble {
     // Tipo de inmueble
     @Enumerated(EnumType.STRING)
     private TipoInmueble tipoInmueble;
+    // Antigüedad
+    @Enumerated(EnumType.STRING)
+    private Antiguedad antiguedad;
 
     // Ubicación
     private String ubicacion;
@@ -48,9 +49,6 @@ public class Inmueble {
     // Superficie terreno (m2)
     private Double superficieTerreno;
 
-    // Antigüedad
-    @Enumerated(EnumType.STRING)
-    private Antiguedad antiguedad;
 
     // Precio de inmueble
     private Double precio;
@@ -86,39 +84,16 @@ public class Inmueble {
     // Reservas
     @JsonManagedReference(value = "inmueble-reservas")
     @OneToMany(targetEntity = Reserva.class, fetch = FetchType.LAZY, mappedBy = "inmueble")
+    @ToString.Exclude
     private List<Reserva> reservas;
 
     // Visitas
     @JsonManagedReference(value = "inmueble-visitas")
     @OneToMany(targetEntity = Visita.class, fetch = FetchType.LAZY, mappedBy = "inmueble")
+    @ToString.Exclude
     private List<Visita> visitas;
 
-    // Enum para Perfil de Usuario
-    public enum PerfilUsuario {
-        PROPIETARIO_PARTICULAR,
-        AGENTE_INMOBILIARIO,
-        CONSTRUCTORA_DESARROLLADORA
-    }
+    @Enumerated(EnumType.STRING)
+    private EstadoInmueble estado;
 
-    // Enum para Tipo de Operación
-    public enum TipoOperacion {
-        VENTA,
-        RENTA
-    }
-
-    // Enum para Tipo de Inmueble
-    public enum TipoInmueble {
-        CASA,
-        EDIFICIO,
-        DEPARTAMENTO,
-        LOCAL_COMERCIAL,
-        TERRENO
-    }
-
-    // Enum para Antigüedad
-    public enum Antiguedad {
-        A_ESTRENAR,
-        ANIOS_DE_ANTIGUEDAD,
-        EN_CONSTRUCCION
-    }
 }

@@ -1,22 +1,18 @@
 package com.nc.Propiedades360.resources.Usuario.Entity;
 
+import com.nc.Propiedades360.resources.Usuario.enums.Rol;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "usuarios")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
+@Data
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     private String nombre;
@@ -30,13 +26,7 @@ public class Usuario {
     @Column(nullable = false)
     private String telefono;
 
-    // Métodos de negocio
-    public void registrarse() {
-    }
-
-    public void iniciarSesion() {
-    }
-
-    public void actualizarPerfil() {
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Rol rol;
 }

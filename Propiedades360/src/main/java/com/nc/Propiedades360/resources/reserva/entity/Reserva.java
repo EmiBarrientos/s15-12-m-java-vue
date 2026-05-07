@@ -2,20 +2,21 @@ package com.nc.Propiedades360.resources.reserva.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nc.Propiedades360.resources.Cliente.Entity.Cliente;
 import com.nc.Propiedades360.resources.inmueble.entity.Inmueble;
+import com.nc.Propiedades360.resources.pago.entity.Pago;
+import com.nc.Propiedades360.resources.reserva.enums.Estado;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-@Data
-@Getter
-@Setter
 @Table(name = "reserva")
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
+@EqualsAndHashCode(exclude = {"pagos"})
 public class Reserva {
 
     @Id
@@ -40,19 +41,9 @@ public class Reserva {
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
-    public enum Estado {
-        PENDIENTE,
-        CONFIRMADA,
-        CANCELADA
-    }
 
-    // Getters y Setters
-
-    public void confirmarReserva() {
-        this.estado = Estado.CONFIRMADA;
-    }
-
-    public void cancelarReserva() {
-        this.estado = Estado.CANCELADA;
-    }
+    @JsonManagedReference(value = "reserva-pagos")
+    @OneToMany(mappedBy = "reserva", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Pago> pagos;
 }

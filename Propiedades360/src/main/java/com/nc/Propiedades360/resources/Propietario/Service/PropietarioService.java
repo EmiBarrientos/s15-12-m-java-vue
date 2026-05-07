@@ -2,6 +2,7 @@ package com.nc.Propiedades360.resources.Propietario.Service;
 
 import com.nc.Propiedades360.resources.Propietario.Entity.Propietario;
 import com.nc.Propiedades360.resources.Propietario.Repository.PropietarioRepository;
+import com.nc.Propiedades360.resources.Usuario.enums.Rol;
 import com.nc.Propiedades360.resources.inmueble.entity.Inmueble;
 import com.nc.Propiedades360.resources.inmueble.repository.InmuebleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class PropietarioService {
 
     public Propietario savePropietario(Propietario propietario) {
         // Validar datos del propietario antes de guardarlo
+        propietario.setRol(Rol.PROPIETARIO);
         return propietarioRepository.save(propietario);
     }
 

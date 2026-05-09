@@ -20,11 +20,16 @@ import CaracteristicasPropiedadVista from '../components/CaracteristicasPropieda
 import RevisionPublicacion from '../components/RevisionPublicacion/RevisionPublicacion';
 import PublicacionExitosa from '../components/PublicacionExitosa/PublicacionExitosa';
 import RevisionAnuncio from '../components/RevisionAnuncio/RevisionAnuncio';
+import Register from '../components/Register/Register';
 
 const routes = createBrowserRouter([
     {
         path: "/",
         element: <PageLayout> <Login /> </PageLayout>
+    },
+    {
+        path: "/registro",
+        element: <PageLayout> <Register /> </PageLayout>
     },
     {
         path: "/home",
@@ -34,7 +39,6 @@ const routes = createBrowserRouter([
         path: "/buscar-propiedades-en-zona",
         element: <PageLayout> <BuscarPropiedades /> </PageLayout>
     },
-    ,
     {
         path: "/resultados-obtenidos",
         element: <PageLayout> <ResultadosObtenidos /> </PageLayout> 

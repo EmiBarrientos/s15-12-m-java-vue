@@ -1,16 +1,41 @@
 package com.nc.Propiedades360.app.cliente.service;
 
+import com.nc.Propiedades360.app.cliente.entity.Cliente;
+import com.nc.Propiedades360.app.cliente.repository.ClienteRepository;
+import com.nc.Propiedades360.app.exception.InvalidStateException;
+import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
+import com.nc.Propiedades360.app.exception.ResourceNotAvailableException;
+import com.nc.Propiedades360.app.inmueble.entity.Inmueble;
+import com.nc.Propiedades360.app.inmueble.enums.EstadoInmueble;
+import com.nc.Propiedades360.app.inmueble.service.InmuebleService;
+import com.nc.Propiedades360.app.pago.entity.Pago;
+import com.nc.Propiedades360.app.pago.enums.EstadoPago;
+import com.nc.Propiedades360.app.pago.service.PagoService;
+import com.nc.Propiedades360.app.reserva.entity.Reserva;
+import com.nc.Propiedades360.app.reserva.enums.Estado;
+import com.nc.Propiedades360.app.reserva.service.ReservaService;
+import com.nc.Propiedades360.app.usuario.enums.Rol;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
-/*
+
     @Mock private ClienteRepository clienteRepository;
-    @Mock private InmuebleRepository inmuebleRepository;
-    @Mock private ReservaRepository reservaRepository;
-    @Mock private PagoRepository pagoRepository;
+    @Mock private InmuebleService inmuebleService;
     @Mock private ReservaService reservaService;
+    @Mock private PagoService pagoService;
 
     @InjectMocks
     private ClienteService clienteService;
@@ -18,6 +43,7 @@ public class ClienteServiceTest {
     private Cliente cliente;
     private Inmueble inmueble;
     private Reserva reserva;
+    private Pago pago;
 
     @BeforeEach
     void setUp() {
@@ -31,13 +57,20 @@ public class ClienteServiceTest {
         inmueble = new Inmueble();
         inmueble.setId(1L);
         inmueble.setTitulo("Casa en Palermo");
-        inmueble.setPrecio(150000.0);
+        inmueble.setEstado(EstadoInmueble.DISPONIBLE);
 
         reserva = new Reserva();
         reserva.setId(1L);
         reserva.setCliente(cliente);
         reserva.setInmueble(inmueble);
-        reserva.setEstado(Reserva.Estado.PENDIENTE);
+        reserva.setEstado(Estado.PENDIENTE);
+
+        pago = new Pago();
+        pago.setId(1L);
+        pago.setCliente(cliente);
+        pago.setReserva(reserva);
+        pago.setMonto(BigDecimal.valueOf(150000));
+        pago.setEstadoPago(EstadoPago.COMPLETADO);
     }
 
     // --- saveCliente ---
@@ -69,129 +102,109 @@ public class ClienteServiceTest {
     void getClienteById_idNoExiste_lanzaExcepcion() {
         when(clienteRepository.findById(99L)).thenReturn(Optional.empty());
 
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        assertThrows(ResourceNotFoundException.class,
                 () -> clienteService.getClienteById(99L)
         );
-
-        assertEquals("Cliente no encontrado", ex.getMessage());
-    }
-
-    // --- buscarInmueble ---
-
-    @Test
-    void buscarInmueble_inmuebleExiste_retornaInmueble() {
-        when(inmuebleRepository.findById(1L)).thenReturn(Optional.of(inmueble));
-
-        Inmueble resultado = clienteService.buscarInmueble(1L);
-
-        assertNotNull(resultado);
-        assertEquals(1L, resultado.getId());
-    }
-
-    @Test
-    void buscarInmueble_inmuebleNoExiste_lanzaExcepcion() {
-        when(inmuebleRepository.findById(99L)).thenReturn(Optional.empty());
-
-        RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> clienteService.buscarInmueble(99L)
-        );
-
-        assertEquals("Inmueble no encontrado", ex.getMessage());
     }
 
     // --- reservarInmueble ---
 
     @Test
-    void reservarInmueble_disponible_creaReservaConfirmada() {
+    void reservarInmueble_disponible_creaReserva() {
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente));
-        when(inmuebleRepository.findById(1L)).thenReturn(Optional.of(inmueble));
-        when(reservaService.confirmarReserva(1L)).thenReturn(false); // disponible
+        when(inmuebleService.verificarDisponibilidad(1L)).thenReturn(inmueble);
+        when(reservaService.crearReserva(cliente, inmueble,
+                LocalDate.now(), LocalDate.now().plusDays(7))).thenReturn(reserva);
 
-        clienteService.reservarInmueble(cliente, inmueble,
-                LocalDate.now(), LocalDate.now().plusDays(7));
+        Reserva resultado = clienteService.reservarInmueble(
+                1L, 1L, LocalDate.now(), LocalDate.now().plusDays(7)
+        );
 
-        verify(reservaRepository, times(1)).save(any(Reserva.class));
-        verify(inmuebleRepository, times(1)).save(inmueble);
+        assertNotNull(resultado);
+        assertEquals(Estado.PENDIENTE, resultado.getEstado());
+        verify(reservaService, times(1)).crearReserva(any(), any(), any(), any());
     }
 
     @Test
-    void reservarInmueble_noDisponible_lanzaExcepcion() {
+    void reservarInmueble_inmuebleNoDisponible_lanzaExcepcion() {
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente));
-        when(inmuebleRepository.findById(1L)).thenReturn(Optional.of(inmueble));
-        when(reservaService.confirmarReserva(1L)).thenReturn(true); // no disponible
+        when(inmuebleService.verificarDisponibilidad(1L))
+                .thenThrow(new ResourceNotAvailableException("El inmueble no está disponible"));
 
-        assertThrows(IllegalStateException.class,
-                () -> clienteService.reservarInmueble(cliente, inmueble,
+        assertThrows(ResourceNotAvailableException.class,
+                () -> clienteService.reservarInmueble(1L, 1L,
                         LocalDate.now(), LocalDate.now().plusDays(7))
         );
 
-        verify(reservaRepository, never()).save(any());
+        verify(reservaService, never()).crearReserva(any(), any(), any(), any());
     }
 
     @Test
     void reservarInmueble_clienteNoExiste_lanzaExcepcion() {
-        when(clienteRepository.findById(1L)).thenReturn(Optional.empty());
+        when(clienteRepository.findById(99L)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class,
-                () -> clienteService.reservarInmueble(cliente, inmueble,
+        assertThrows(ResourceNotFoundException.class,
+                () -> clienteService.reservarInmueble(99L, 1L,
                         LocalDate.now(), LocalDate.now().plusDays(7))
         );
 
-        verify(reservaRepository, never()).save(any());
+        verify(reservaService, never()).crearReserva(any(), any(), any(), any());
     }
 
     // --- realizarPago ---
 
     @Test
-    void realizarPago_reservaPendiente_procesaPagoYconfirmaReserva() {
-        Pago pago = mock(Pago.class);
+    void realizarPago_reservaPendiente_procesaPago() {
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente));
-        when(reservaRepository.findById(1L)).thenReturn(Optional.of(reserva));
-        when(pagoRepository.save(any(Pago.class))).thenReturn(pago);
-        when(pago.verificarEstadoPago()).thenReturn(Pago.EstadoPago.COMPLETADO);
+        when(reservaService.findById(1L)).thenReturn(Optional.of(reserva));
+        when(pagoService.procesarPago(cliente, reserva,
+                BigDecimal.valueOf(150000), "TRANSFERENCIA")).thenReturn(pago);
 
-        clienteService.realizarPago(1L, 1L, BigDecimal.valueOf(150000), "TRANSFERENCIA");
+        Pago resultado = clienteService.realizarPago(
+                1L, 1L, BigDecimal.valueOf(150000), "TRANSFERENCIA"
+        );
 
-        verify(pagoRepository, times(1)).save(any(Pago.class));
-        verify(reservaRepository, times(1)).save(reserva);
+        assertNotNull(resultado);
+        assertEquals(EstadoPago.COMPLETADO, resultado.getEstadoPago());
+        verify(pagoService, times(1)).procesarPago(any(), any(), any(), any());
     }
 
     @Test
     void realizarPago_reservaNoEstaEnPendiente_lanzaExcepcion() {
-        reserva.setEstado(Reserva.Estado.CONFIRMADA);
+        reserva.setEstado(Estado.CONFIRMADA);
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente));
-        when(reservaRepository.findById(1L)).thenReturn(Optional.of(reserva));
+        when(reservaService.findById(1L)).thenReturn(Optional.of(reserva));
 
-        assertThrows(IllegalStateException.class,
-                () -> clienteService.realizarPago(1L, 1L, BigDecimal.valueOf(150000), "TRANSFERENCIA")
+        assertThrows(InvalidStateException.class,
+                () -> clienteService.realizarPago(1L, 1L,
+                        BigDecimal.valueOf(150000), "TRANSFERENCIA")
         );
 
-        verify(pagoRepository, never()).save(any());
+        verify(pagoService, never()).procesarPago(any(), any(), any(), any());
     }
 
     @Test
     void realizarPago_clienteNoExiste_lanzaExcepcion() {
         when(clienteRepository.findById(99L)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class,
-                () -> clienteService.realizarPago(99L, 1L, BigDecimal.valueOf(150000), "TRANSFERENCIA")
+        assertThrows(ResourceNotFoundException.class,
+                () -> clienteService.realizarPago(99L, 1L,
+                        BigDecimal.valueOf(150000), "TRANSFERENCIA")
         );
 
-        verify(pagoRepository, never()).save(any());
+        verify(pagoService, never()).procesarPago(any(), any(), any(), any());
     }
 
     @Test
     void realizarPago_reservaNoExiste_lanzaExcepcion() {
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente));
-        when(reservaRepository.findById(99L)).thenReturn(Optional.empty());
+        when(reservaService.findById(99L)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class,
-                () -> clienteService.realizarPago(1L, 99L, BigDecimal.valueOf(150000), "TRANSFERENCIA")
+        assertThrows(ResourceNotFoundException.class,
+                () -> clienteService.realizarPago(1L, 99L,
+                        BigDecimal.valueOf(150000), "TRANSFERENCIA")
         );
 
-        verify(pagoRepository, never()).save(any());
+        verify(pagoService, never()).procesarPago(any(), any(), any(), any());
     }
-}
-
- */
 }

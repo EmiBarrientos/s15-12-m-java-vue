@@ -1,6 +1,5 @@
 package com.nc.Propiedades360.app.inmueble.service;
 
-import com.nc.Propiedades360.app.exception.InvalidStateException;
 import com.nc.Propiedades360.app.exception.ResourceNotAvailableException;
 import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.inmueble.entity.Inmueble;
@@ -51,11 +50,6 @@ public class InmuebleService {
         return inmuebleRepository.save(inmueble);
     }
 
-}
 
- /*public Inmueble updateEstado(Long id, String estado) {
-        Inmueble inmueble = inmuebleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Inmueble no encontrado"));
-        inmueble.setEstado(estado);
-        return inmuebleRepository.save(inmueble);
-    }*/
+
+}

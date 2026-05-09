@@ -14,12 +14,12 @@ import java.util.List;
 public class VisitaService {
 
     private final VisitaRepository visitaRepository;
-    private final InmuebleRepository inmuebleRepository;
+
 
     @Autowired
     public VisitaService(VisitaRepository visitaRepository, InmuebleRepository inmuebleRepository) {
         this.visitaRepository = visitaRepository;
-        this.inmuebleRepository = inmuebleRepository;
+
     }
 
     public List<Visita> findAll() {

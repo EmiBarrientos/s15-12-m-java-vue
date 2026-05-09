@@ -1,5 +1,7 @@
 package com.nc.Propiedades360.app.usuario.service;
 
+
+import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.usuario.entity.Usuario;
 import com.nc.Propiedades360.app.usuario.repository.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,12 +91,13 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    void actualizarPerfil_usuarioNoExiste_retornaNull() {
+    void actualizarPerfil_usuarioNoExiste_lanzaExcepcion() {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Usuario resultado = usuarioService.actualizarPerfil(usuario);
+        assertThrows(ResourceNotFoundException.class,
+                () -> usuarioService.actualizarPerfil(usuario)
+        );
 
-        assertNull(resultado);
         verify(usuarioRepository, never()).save(any());
     }
 }

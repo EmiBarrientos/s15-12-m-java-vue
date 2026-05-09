@@ -1,6 +1,7 @@
 package com.nc.Propiedades360.app.pago.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nc.Propiedades360.app.cliente.entity.Cliente;
 import com.nc.Propiedades360.app.pago.enums.EstadoPago;
 import com.nc.Propiedades360.app.reserva.entity.Reserva;
@@ -19,10 +20,13 @@ public class Pago {
 
     private BigDecimal monto;
     private String metodoPago;
+
+    @JsonBackReference(value = "cliente-pagos")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @JsonBackReference(value = "reserva-pagos")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reserva_id")
     private Reserva reserva;

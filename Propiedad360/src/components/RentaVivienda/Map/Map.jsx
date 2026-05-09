@@ -1,5 +1,5 @@
 import React from 'react';
-import { APIProvider, Map as GoogleMap, Marker } from '@vis.gl/react-google-maps';
+import { APIProvider, Map as GoogleMap, AdvancedMarker } from '@vis.gl/react-google-maps';
 
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -15,7 +15,7 @@ const Map = () => {
             gestureHandling={'greedy'}
             disableDefaultUI={true}
           >
-            <Marker position={{ lat: -34.5922, lng: -58.4064 }} />
+            <AdvancedMarker position={{ lat: -34.5922, lng: -58.4064 }} />
           </GoogleMap>
         </div>
       </APIProvider>

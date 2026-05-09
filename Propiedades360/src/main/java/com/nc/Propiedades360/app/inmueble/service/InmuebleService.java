@@ -50,6 +50,9 @@ public class InmuebleService {
         return inmuebleRepository.save(inmueble);
     }
 
+    public List<Inmueble> findByUbicacion(String ubicacion) {
+        return inmuebleRepository.findByUbicacionContainingIgnoreCase(ubicacion);
+    }
 
 
 }

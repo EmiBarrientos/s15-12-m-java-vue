@@ -40,4 +40,9 @@ public class InmuebleController {
     public ResponseEntity<Inmueble> actualizarEstado(@PathVariable Long id, @RequestParam EstadoInmueble estado) {
         return ResponseEntity.ok(inmuebleService.actualizarEstado(id, estado));
     }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Inmueble>> buscarPorUbicacion(@RequestParam String ubicacion) {
+        return ResponseEntity.ok(inmuebleService.findByUbicacion(ubicacion));
+    }
 }

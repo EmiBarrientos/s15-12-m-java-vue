@@ -1,8 +1,12 @@
 package com.nc.Propiedades360.app.cliente.controller;
 
 import com.nc.Propiedades360.app.cliente.entity.Cliente;
+import com.nc.Propiedades360.app.cliente.http.request.PagoRequest;
+import com.nc.Propiedades360.app.cliente.http.request.ReservaRequest;
 import com.nc.Propiedades360.app.cliente.service.ClienteService;
 import com.nc.Propiedades360.app.inmueble.entity.Inmueble;
+import com.nc.Propiedades360.app.pago.entity.Pago;
+import com.nc.Propiedades360.app.reserva.entity.Reserva;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +14,7 @@ import java.time.LocalDate;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 public class ClienteController {
 
 
@@ -21,48 +25,35 @@ public class ClienteController {
     }
 
 
-    @PostMapping("/create")
-    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
-        Cliente newCliente = clienteService.saveCliente(cliente);
-        return ResponseEntity.ok(newCliente);
+    @PostMapping("/registrar")
+    public ResponseEntity<Cliente> registrar(@RequestBody Cliente cliente) {
+        return ResponseEntity.ok(clienteService.saveCliente(cliente));
     }
 
-    @GetMapping("/obtener-cliente/{clienteId}")
-    public ResponseEntity<Cliente> obtenerCliente(@PathVariable("clienteId") Long clienteId) {
-        Cliente cliente = clienteService.getClienteById(clienteId);
-        return ResponseEntity.ok(cliente);
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> obtener(@PathVariable Long clienteId) {
+        return ResponseEntity.ok(clienteService.getClienteById(clienteId));
     }
 
 
     @PostMapping("/reservar")
-    public ResponseEntity<Void> reservarInmueble(@RequestBody ReservaRequest reservaRequest) {
-        Cliente cliente = reservaRequest.getCliente();
-        Inmueble inmueble = reservaRequest.getInmueble();
-        LocalDate fechaInicio = reservaRequest.getFechaInicio();
-        LocalDate fechaFin = reservaRequest.getFechaFin();
-
-        clienteService.reservarInmueble(cliente.getId(), inmueble.getId(), fechaInicio, fechaFin);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Reserva> reservar(@RequestBody ReservaRequest request) {
+        return ResponseEntity.ok(clienteService.reservarInmueble(
+                request.getClienteId(),
+                request.getInmuebleId(),
+                request.getFechaInicio(),
+                request.getFechaFin()
+        ));
     }
+
 
     @PostMapping("/pagar")
-    public ResponseEntity<Void> realizarPago(@RequestBody PagoRequest pagoRequest) {
-        Long cliente = pagoRequest.getClienteId();
-        Long reserva = pagoRequest.getReservaId();
-        BigDecimal monto = pagoRequest.getMonto();
-        String metodoPago = pagoRequest.getMetodoPago();
-
-        clienteService.realizarPago(cliente, reserva, monto, metodoPago);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Pago> pagar(@RequestBody PagoRequest request) {
+        return ResponseEntity.ok(clienteService.realizarPago(
+                request.getClienteId(),
+                request.getReservaId(),
+                request.getMonto(),
+                request.getMetodoPago()
+        ));
     }
 }
-
-/*
-*
-*   @GetMapping("/buscar-inmueble/{inmuebleId}")
-    public ResponseEntity<Inmueble> buscarInmueble(@PathVariable Long inmuebleId) {
-        Inmueble inmueble = clienteService.buscarInmueble(inmuebleId);
-        return ResponseEntity.ok(inmueble);
-    }
-*
-* */

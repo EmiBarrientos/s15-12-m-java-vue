@@ -1,5 +1,6 @@
 package com.nc.Propiedades360.app.propietario.service;
 
+import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.propietario.entity.Propietario;
 import com.nc.Propiedades360.app.propietario.repository.PropietarioRepository;
 import com.nc.Propiedades360.app.usuario.enums.Rol;
@@ -34,7 +35,7 @@ public class PropietarioService {
 
     public Propietario getPropietarioById(Long id) {
         return propietarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Propietario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Propietario no encontrado"));
     }
 
     public List<Inmueble> getInmueblesByPropietario(Long propietarioId) {

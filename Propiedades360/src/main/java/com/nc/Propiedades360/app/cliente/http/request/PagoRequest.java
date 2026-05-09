@@ -1,4 +1,4 @@
-package com.nc.Propiedades360.app.cliente.controller;
+package com.nc.Propiedades360.app.cliente.http.request;
 
 import lombok.Getter;
 import lombok.Setter;

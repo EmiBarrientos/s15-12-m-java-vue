@@ -2,6 +2,8 @@ package com.nc.Propiedades360.app.cliente.service;
 
 import com.nc.Propiedades360.app.cliente.entity.Cliente;
 import com.nc.Propiedades360.app.cliente.repository.ClienteRepository;
+import com.nc.Propiedades360.app.exception.InvalidStateException;
+import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.usuario.enums.Rol;
 import com.nc.Propiedades360.app.inmueble.entity.Inmueble;
 import com.nc.Propiedades360.app.inmueble.service.InmuebleService;
@@ -37,7 +39,7 @@ public class ClienteService {
 
     public Cliente getClienteById(Long id) {
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
     }
 
 
@@ -59,10 +61,10 @@ public class ClienteService {
         Cliente cliente = getClienteById(clienteId);
 
         Reserva reserva = reservaService.findById(reservaId)
-                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Reserva no encontrada"));
 
         if (reserva.getEstado() != com.nc.Propiedades360.app.reserva.enums.Estado.PENDIENTE) {
-            throw new IllegalStateException("La reserva no está en estado PENDIENTE");
+            throw new InvalidStateException("La reserva no está en estado PENDIENTE");
         }
 
         return pagoService.procesarPago(cliente, reserva, monto, metodoPago);

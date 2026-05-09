@@ -2,7 +2,6 @@ package com.nc.Propiedades360.app.visita.controller;
 
 import com.nc.Propiedades360.app.visita.entity.Visita;
 import com.nc.Propiedades360.app.visita.service.VisitaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,37 +13,35 @@ public class VisitaController {
 
     private final VisitaService visitaService;
 
-    @Autowired
+
     public VisitaController(VisitaService visitaService) {
         this.visitaService = visitaService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Visita>> getAllVisits() {
-        List<Visita> visitas = visitaService.findAll();
-        return ResponseEntity.ok(visitas);
+    @GetMapping
+    public ResponseEntity<List<Visita>> obtenerTodas() {
+        return ResponseEntity.ok(visitaService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Visita> getVisitById(@PathVariable Long id) {
-        Visita visita = visitaService.findById(id);
-        return ResponseEntity.ok(visita);
+    public ResponseEntity<Visita> obtener(@PathVariable Long id) {
+        return ResponseEntity.ok(visitaService.findById(id));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Visita> createVisit(@RequestBody Visita visita) {
-        Visita newVisita = visitaService.crearVisita(visita);
-        return ResponseEntity.ok(newVisita);
+    @PostMapping
+    public ResponseEntity<Visita> crear(@RequestBody Visita visita) {
+        return ResponseEntity.ok(visitaService.crearVisita(visita));
     }
+
 
     @PutMapping("/{id}")
-    public ResponseEntity<Visita> updateVisit(@PathVariable Long id, @RequestBody Visita visitDetails) {
-        Visita updatedVisita = visitaService.actualizarVisita(visitDetails);
-        return ResponseEntity.ok(updatedVisita);
+    public ResponseEntity<Visita> actualizar(@PathVariable Long id, @RequestBody Visita visita) {
+        visita.setId(id);
+        return ResponseEntity.ok(visitaService.actualizarVisita(visita));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVisit(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         visitaService.eliminarVisita(id);
         return ResponseEntity.noContent().build();
     }

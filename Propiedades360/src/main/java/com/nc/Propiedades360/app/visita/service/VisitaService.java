@@ -1,6 +1,7 @@
 package com.nc.Propiedades360.app.visita.service;
 
 
+import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.inmueble.repository.InmuebleRepository;
 import com.nc.Propiedades360.app.visita.entity.Visita;
 import com.nc.Propiedades360.app.visita.repository.VisitaRepository;
@@ -27,7 +28,7 @@ public class VisitaService {
 
     public Visita findById(Long id) {
         return visitaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Visita no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Visita no encontrada"));
     }
 
     public Visita crearVisita(Visita visita) {
@@ -37,7 +38,7 @@ public class VisitaService {
 
     public Visita actualizarVisita(Visita visitaDetalles) {
         Visita visita = visitaRepository.findById(visitaDetalles.getId())
-                .orElseThrow(() -> new RuntimeException("Visita no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Visita no encontrada"));
 
         // Validar datos de la visita antes de actualizarla
         visita.setFechaVisita(visitaDetalles.getFechaVisita());

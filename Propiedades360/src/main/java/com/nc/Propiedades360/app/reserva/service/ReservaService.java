@@ -2,6 +2,7 @@ package com.nc.Propiedades360.app.reserva.service;
 
 
 import com.nc.Propiedades360.app.cliente.entity.Cliente;
+import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.inmueble.entity.Inmueble;
 import com.nc.Propiedades360.app.inmueble.enums.EstadoInmueble;
 import com.nc.Propiedades360.app.inmueble.service.InmuebleService;
@@ -47,7 +48,7 @@ public class ReservaService {
     @Transactional
     public Reserva confirmarReserva(Long id) {
         Reserva reserva = reservaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Reserva no encontrada"));
 
         reserva.setEstado(Estado.CONFIRMADA);
         return reservaRepository.save(reserva);
@@ -58,7 +59,7 @@ public class ReservaService {
     @Transactional
     public Reserva cancelarReserva(Long id) {
         Reserva reserva = reservaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Reserva no encontrada"));
 
         reserva.setEstado(Estado.CANCELADA);
         inmuebleService.actualizarEstado(reserva.getInmueble().getId(), EstadoInmueble.DISPONIBLE);

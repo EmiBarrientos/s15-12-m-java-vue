@@ -1,124 +1,127 @@
+import React, { useState } from 'react';
 import { LuUsers } from "react-icons/lu";
 import { CiHome } from "react-icons/ci";
 import { PiCodepenLogoThin } from "react-icons/pi";
-import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { useInmueble } from '../../context/InmuebleContext';
 
 const PublicacionPropiedad = () => {
-  return (
-    <section >
-      <div className="container mx-auto px-4 py-16 md:py-14">
-        <h1 className="text-black font-bold text-[32px] md:text-[48px] lg:text-[64px]">
-          Publicación de <span className="text-customColor2 font-bold">Propiedad</span>
-        </h1>
-        <p className="text-customColor3 font-normal text-[18px] md:text-[20px] lg:text-[24px] ">
-          Gratis y en simples pasos
-        </p>
+    const { actualizarInmueble } = useInmueble();
+    const navigate = useNavigate();
+    const [perfilUsuario, setPerfilUsuario] = useState('');
+    const [tipoOperacion, setTipoOperacion] = useState('');
+    const [tipoInmueble, setTipoInmueble] = useState('');
+    const [ubicacion, setUbicacion] = useState('');
 
-        <p className="text-[32px] text-customColor font-bold mt-12">
-             Selecciona el perfil que más se ajuste a tus necesidades
-        </p>
+    const handleContinuar = () => {
+        actualizarInmueble({ perfilUsuario, tipoOperacion, tipoInmueble, ubicacion });
+        navigate('/caracteristicas-de-propiedad');
+    };
 
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-96 pt-7">
-                <div className="card w-[314px] h-[197px] shadow-xl bg-[#F2C44E]  text-customColor">
-                    <div className="card-body items-center text-center">
-                        <div><LuUsers  className="w-16 h-16" /></div>
-                        <p className="text-[22px] ">
-                            Propietario particular <br/> de inmueble
-                        </p>
+    return (
+        <section>
+            <div className="container mx-auto px-4 py-16 md:py-14">
+                <h1 className="text-black font-bold text-[32px] md:text-[48px] lg:text-[64px]">
+                    Publicación de <span className="text-customColor2 font-bold">Propiedad</span>
+                </h1>
+                <p className="text-customColor3 font-normal text-[18px] md:text-[20px] lg:text-[24px]">
+                    Gratis y en simples pasos
+                </p>
+
+                <p className="text-[32px] text-customColor font-bold mt-12">
+                    Selecciona el perfil que más se ajuste a tus necesidades
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-96 pt-7">
+                    <div
+                        className={`card w-[314px] h-[197px] shadow-xl cursor-pointer ${perfilUsuario === 'PROPIETARIO_PARTICULAR' ? 'bg-[#F2C44E]' : 'bg-[#E0E0E0]'} text-customColor`}
+                        onClick={() => setPerfilUsuario('PROPIETARIO_PARTICULAR')}
+                    >
+                        <div className="card-body items-center text-center">
+                            <LuUsers className="w-16 h-16" />
+                            <p className="text-[22px]">Propietario particular de inmueble</p>
+                        </div>
                     </div>
-                </div> 
 
-                <div className="card w-[314px] h-[197px] shadow-xl bg-[#E0E0E0]  text-customColor">
-                    <div className="card-body items-center text-center">
-                        <div><CiHome className="w-16 h-16" /></div>
-                        <p className="text-[22px] ">
-                           Agente inmobiliario <br/> Inmobiliaria
-                        </p>
+                    <div
+                        className={`card w-[314px] h-[197px] shadow-xl cursor-pointer ${perfilUsuario === 'AGENTE_INMOBILIARIO' ? 'bg-[#F2C44E]' : 'bg-[#E0E0E0]'} text-customColor`}
+                        onClick={() => setPerfilUsuario('AGENTE_INMOBILIARIO')}
+                    >
+                        <div className="card-body items-center text-center">
+                            <CiHome className="w-16 h-16" />
+                            <p className="text-[22px]">Agente inmobiliario / Inmobiliaria</p>
+                        </div>
                     </div>
-                </div> 
 
-                <div className="card w-[314px] h-[197px] shadow-xl bg-[#E0E0E0]  text-customColor">
-                    <div className="card-body items-center text-center">
-                        <div><PiCodepenLogoThin  className="w-16 h-16" /></div>
-                        <p className="text-[22px] ">
-                            Constructora <br/> Desarrolladora
-                        </p>
+                    <div
+                        className={`card w-[314px] h-[197px] shadow-xl cursor-pointer ${perfilUsuario === 'CONSTRUCTORA_DESARROLLADORA' ? 'bg-[#F2C44E]' : 'bg-[#E0E0E0]'} text-customColor`}
+                        onClick={() => setPerfilUsuario('CONSTRUCTORA_DESARROLLADORA')}
+                    >
+                        <div className="card-body items-center text-center">
+                            <PiCodepenLogoThin className="w-16 h-16" />
+                            <p className="text-[22px]">Constructora / Desarrolladora</p>
+                        </div>
                     </div>
-                </div> 
+                </div>
 
-               
-        </div>
+                <p className="text-[32px] text-customColor font-bold mt-12">Tipo de operación a realizar</p>
 
-        <p className="text-[32px] text-customColor font-bold mt-12">
-            Tipo de operación a realizar 
-        </p>
-              
-        <button className="btn  w-[314px] h-[120px] bg-[#E0E0E0] text-[32px] text-customColor mt-4">VENTA</button>
-        <button className="btn ml-24 w-[314px] h-[120px] bg-[#F2C44E] text-[32px] text-customColor mt-4">RENTA</button>
-        
-        <p className="text-[32px] text-customColor font-bold mt-12">
-            Tipo de inmueble 
-        </p>
-          
-        <div className="bg-[#E0E0E0] w-[1142px] h-[776px] rounded-lg mt-6">
-          <select className="select select-bordered bg-white text-black w-[1059px] mt-9 mx-8 ">
-            <option value="" disabled className="text-black text-lg md:text-xl lg:text-2xl">Selecciona una opción</option>
-            <option value="casa" className="text-black text-lg md:text-xl lg:text-2xl">Casa</option>
-            <option value="departamento" className="text-black text-lg md:text-xl lg:text-2xl">Departamento</option>
-            <option value="edificio" className="text-black text-lg md:text-xl lg:text-2xl">Edificio</option>
-            <option value="oficina" className="text-black text-lg md:text-xl lg:text-2xl">Oficina</option>
-            <option value="rancho" className="text-black text-lg md:text-xl lg:text-2xl">Rancho</option>
-            <option value="quinta" className="text-black text-lg md:text-xl lg:text-2xl">Quinta</option>
-            <option value="terreno" className="text-black text-lg md:text-xl lg:text-2xl">Terreno</option>
-            <option value="lote" className="text-black text-lg md:text-xl lg:text-2xl">Lote</option>
-            <option value="villa" className="text-black text-lg md:text-xl lg:text-2xl">Villa</option>
-            <option value="duplex" className="text-black text-lg md:text-xl lg:text-2xl">Dúplex</option>
-            <option value="huerta" className="text-black text-lg md:text-xl lg:text-2xl">Huerta</option>
-            <option value="nave-comercial" className="text-black text-lg md:text-xl lg:text-2xl">Nave comercial</option>
-            <option value="bodega" className="text-black text-lg md:text-xl lg:text-2xl">Bodega</option>
-          </select>  
-        </div> 
+                <button
+                    className={`btn w-[314px] h-[120px] text-[32px] text-customColor mt-4 ${tipoOperacion === 'VENTA' ? 'bg-[#F2C44E]' : 'bg-[#E0E0E0]'}`}
+                    onClick={() => setTipoOperacion('VENTA')}
+                >VENTA</button>
+                <button
+                    className={`btn ml-24 w-[314px] h-[120px] text-[32px] text-customColor mt-4 ${tipoOperacion === 'RENTA' ? 'bg-[#F2C44E]' : 'bg-[#E0E0E0]'}`}
+                    onClick={() => setTipoOperacion('RENTA')}
+                >RENTA</button>
 
-        <p className="text-[32px] text-customColor font-bold mt-12">
-            Ubicación
-        </p>
+                <p className="text-[32px] text-customColor font-bold mt-12">Tipo de inmueble</p>
 
-        <div className="bg-[#E0E0E0] w-[1142px] h-[236px] rounded-lg mt-6">
-            <br/>
-            <div className="flex justify-start  ml-7">
-              <CiHome className="w-10 h-10 text-customColor"/>
-               <span className="text-[#191A18] text-[32px] font-bold"> Ingresar la dirección completa</span>
+                <div className="bg-[#E0E0E0] w-[1142px] h-[776px] rounded-lg mt-6">
+                    <select
+                        className="select select-bordered bg-white text-black w-[1059px] mt-9 mx-8"
+                        value={tipoInmueble}
+                        onChange={(e) => setTipoInmueble(e.target.value)}
+                    >
+                        <option value="" disabled>Selecciona una opción</option>
+                        <option value="CASA">Casa</option>
+                        <option value="DEPARTAMENTO">Departamento</option>
+                        <option value="EDIFICIO">Edificio</option>
+                        <option value="LOCAL_COMERCIAL">Local comercial</option>
+                        <option value="TERRENO">Terreno</option>
+                    </select>
+                </div>
+
+                <p className="text-[32px] text-customColor font-bold mt-12">Ubicación</p>
+
+                <div className="bg-[#E0E0E0] w-[1142px] h-[236px] rounded-lg mt-6">
+                    <br />
+                    <div className="flex justify-start ml-7">
+                        <CiHome className="w-10 h-10 text-customColor" />
+                        <span className="text-[#191A18] text-[32px] font-bold">Ingresar la dirección completa</span>
+                    </div>
+                    <div className="w-full ml-7 mt-4">
+                        <input
+                            type="text"
+                            placeholder="Ingresa dirección"
+                            className="input w-[1080px] h-[49px] bg-white border border-customColor4 rounded-md text-customColor"
+                            value={ubicacion}
+                            onChange={(e) => setUbicacion(e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                <div className="flex justify-end">
+                    <button
+                        className="btn bg-[#DE7E1F] text-white w-[208px] h-[62px] rounded-[16px]"
+                        onClick={handleContinuar}
+                    >
+                        Continuar
+                    </button>
+                </div>
             </div>
-            
-            <div className="w-full ml-7 mt-4">
-               <input type="text" placeholder="Ingresa dirección"  className="input w-[1080px] h-[49px] bg-white border border-customColor4 rounded-md text-customColor" />  
-            </div>             
-        </div>
-
-        <p className="text-[32px] text-customColor font-bold mt-12">
-            Ubicación
-        </p>
-
-        <div className="form-control">
-          <label className="label cursor-pointer w-10">       
-            <input type="checkbox" className="checkbox border-customColor checked:border-blue-700 [--chkbg:theme(colors.blue.700)] [--chkfg:white]" />
-            <span className="label-text ml-3 text-customColor">Exacta</span> 
-
-            <input type="checkbox" defaultChecked className="checkbox ml-20 border-customColor checked:border-blue-700 [--chkbg:theme(colors.blue.700)] [--chkfg:white]" />
-            <span className="label-text ml-3 text-customColor">Aproximada</span> 
-          </label>
-        </div>
-
-        <div className="flex justify-end">
-            <Link to="/caracteristicas-de-propiedad">
-                 <button className="btn  bg-[#DE7E1F] text-white w-[208px] h-[62px] rounded-[16px] ">Continuar</button>
-            </Link>  
-        </div>
-
-     </div>
-    </section>
-  )
+        </section>
+    );
 }
 
 export default PublicacionPropiedad;

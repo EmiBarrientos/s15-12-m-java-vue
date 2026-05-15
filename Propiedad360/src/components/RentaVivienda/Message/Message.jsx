@@ -14,11 +14,15 @@ const Message = ({ inmuebleId }) => {
     const handleAgendar = async () => {
         try {
             setLoading(true);
+            console.log('cliente id:', user.id);
+            console.log('inmueble id:', inmuebleId);
+            console.log('fecha:', fecha);
             await crearVisita({
                 cliente: { id: user.id },
                 inmueble: { id: inmuebleId },
                 fechaVisita: fecha
             });
+             
             navigate(`/agenda-una-visita?inmuebleId=${inmuebleId}&fecha=${fecha}`);
         } catch (err) {
             console.error('Error al agendar visita:', err);

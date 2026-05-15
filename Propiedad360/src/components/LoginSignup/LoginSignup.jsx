@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate  } from 'react-router-dom';
 import { MdEmail, MdLock } from 'react-icons/md';
 import { useUser } from '../../context/UserContext';
-import { iniciarSesion } from '../../api/clientApi';
+import { iniciarSesion } from '../../api/usuarioApi';
 import login from './assets/login.png';
 
 const LoginSignup = () => {
@@ -24,6 +24,7 @@ const LoginSignup = () => {
       setLoading(true);
       setError('');
       const response = await iniciarSesion(email, password);
+      console.log('Usuario logueado:', response.data); 
       loginContext(response.data);
       navigate('/home');
       } catch (err) {

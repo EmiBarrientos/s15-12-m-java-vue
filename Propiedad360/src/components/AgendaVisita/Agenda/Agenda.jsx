@@ -25,7 +25,7 @@ const Agenda = () => {
                 <Link to={`/detalle-de-vivienda?id=${inmuebleId}`}>
                     <button className="btn btn-wide bg-buttonColor text-white">Modificar</button>
                 </Link>
-                <Link to="/confirmar-cita">
+                <Link to={`/confirmar-cita?inmuebleId=${inmuebleId}&fecha=${fecha}`}>
                     <button className="btn btn-wide bg-buttonColor2 text-white">Confirmar</button>
                 </Link>
             </div>

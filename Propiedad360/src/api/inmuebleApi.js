@@ -1,4 +1,4 @@
-
+import client from './client';
 export const obtenerInmuebles = () => 
     client.get('/inmuebles');
 

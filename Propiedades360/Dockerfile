@@ -1,5 +1,9 @@
+FROM maven:3.9-amazoncorretto-17 AS build
+WORKDIR /app
+COPY Propiedades360/pom.xml .
+COPY Propiedades360/src ./src
+RUN mvn clean package -DskipTests
+
 FROM amazoncorretto:17-alpine-jdk
-
-COPY Propiedades360/target/Propiedades360-0.0.1-SNAPSHOT.jar app.jar
-
+COPY --from=build /app/target/Propiedades360-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]

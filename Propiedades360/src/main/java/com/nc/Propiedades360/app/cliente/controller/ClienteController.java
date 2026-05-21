@@ -25,10 +25,6 @@ public class ClienteController {
     }
 
 
-    @PostMapping("/registrar")
-    public ResponseEntity<Cliente> registrar(@RequestBody Cliente cliente) {
-        return ResponseEntity.ok(clienteService.saveCliente(cliente));
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> obtener(@PathVariable Long id) {

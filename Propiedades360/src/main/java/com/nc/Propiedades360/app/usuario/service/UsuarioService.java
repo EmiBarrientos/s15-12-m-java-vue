@@ -16,13 +16,6 @@ public class UsuarioService {
         this.usuarioRepository = repository;
     }
 
-
-
-    public Optional<Usuario> iniciarSesion(String email, String contrasena) {
-        return usuarioRepository.findByEmail(email)
-                .filter(u -> u.getContrasena().equals(contrasena));
-    }
-
     public Usuario actualizarPerfil(Usuario usuario) {
         usuarioRepository.findById(usuario.getId())
                 .orElseThrow(()->new ResourceNotFoundException("Usuario no encontrado"));

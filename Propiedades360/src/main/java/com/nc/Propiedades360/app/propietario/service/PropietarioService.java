@@ -54,8 +54,7 @@ public class PropietarioService {
 
     @Transactional
     public Inmueble actualizarInmueble(Long inmuebleId, Inmueble inmuebleDetalles) {
-        Inmueble inmueble = inmuebleService.findById(inmuebleId)
-                ;
+        Inmueble inmueble = inmuebleService.findById(inmuebleId);
         inmueble.setTipoInmueble(inmuebleDetalles.getTipoInmueble());
         inmueble.setUbicacion(inmuebleDetalles.getUbicacion());
         inmueble.setTipoOperacion(inmuebleDetalles.getTipoOperacion());

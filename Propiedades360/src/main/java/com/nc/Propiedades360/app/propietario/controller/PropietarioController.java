@@ -19,11 +19,7 @@ public class PropietarioController {
         this.propietarioService = propietarioService;
     }
 
-    @PostMapping("/registrar")
-    public ResponseEntity<Propietario> registrar(@RequestBody Propietario propietario) {
-        Propietario newPropietario = propietarioService.savePropietario(propietario);
-        return ResponseEntity.ok(newPropietario);
-    }
+
     @GetMapping("/{propietarioId}")
     public ResponseEntity<Propietario> obtener(@PathVariable Long propietarioId) {
         return ResponseEntity.ok(propietarioService.getPropietarioById(propietarioId));

@@ -1,0 +1,17 @@
+target
+.idea
+.git
+.gitignore
+
+Dockerfile
+docker-compose.yml
+
+README.md
+
+*.iml
+
+.env
+
+node_modules
+
+.DS_Store

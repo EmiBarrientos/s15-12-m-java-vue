@@ -1,4 +1,4 @@
-package com.nc.Propiedades360.app.usuario.dto;
+package com.nc.Propiedades360.app.auth.dto;
 
 import lombok.Getter;
 import lombok.Setter;

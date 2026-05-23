@@ -1,9 +1,9 @@
 import client from './client';
 export const obtenerInmuebles = () => 
-    client.get('/inmuebles');
+    client.get('/api/inmuebles');
 
 export const buscarPorUbicacion = (ubicacion) => 
-    client.get(`/inmuebles/buscar?ubicacion=${ubicacion}`);
+    client.get(`/api/inmuebles/buscar?ubicacion=${ubicacion}`);
 
 export const obtenerInmueble = (id) => 
-    client.get(`/inmuebles/${id}`);
+    client.get(`/api/inmuebles/${id}`);

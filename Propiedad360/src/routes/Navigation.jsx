@@ -21,17 +21,23 @@ import RevisionPublicacion from '../components/RevisionPublicacion/RevisionPubli
 import PublicacionExitosa from '../components/PublicacionExitosa/PublicacionExitosa';
 import RevisionAnuncio from '../components/RevisionAnuncio/RevisionAnuncio';
 import Register from '../components/Register/Register';
+import { protectedLoader, loginLoader } from './protectedLoader';
 
 const routes = createBrowserRouter([
     {
         path: "/",
         element: <PageLayout> <Login /> </PageLayout>
     },
-    {
+     {
         path: "/registro",
         element: <PageLayout> <Register /> </PageLayout>
     },
     {
+        path: '/',
+        element: <PageLayout />, // Un layout común (ej: barra de navegación)
+        loader: protectedLoader, // PROTEGE TODO ESTE GRUPO de rutas
+        children:[
+            {
         path: "/home",
         element: <PageLayout> <Home /> </PageLayout>
     },
@@ -103,6 +109,11 @@ const routes = createBrowserRouter([
         path: "/ir-a-anuncio",
         element: <PageLayout> <RevisionAnuncio/></PageLayout>  
     }
+
+        ]
+    },
+   
+    
 ]);
 
 const Navigation = () => {

@@ -2,7 +2,7 @@
 import client from './client';
 
 export const publicarInmueble = (inmueble, propietarioId) =>
-    client.post(`/propietarios/${propietarioId}/inmuebles`, inmueble);
+    client.post(`/api/propietarios/${propietarioId}/inmuebles`, inmueble);
 
 export const obtenerPropietario = (id) =>
-    client.get(`/propietarios/${id}`);
+    client.get(`/api/propietarios/${id}`);

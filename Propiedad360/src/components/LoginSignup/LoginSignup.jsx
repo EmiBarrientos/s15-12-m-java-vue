@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate  } from 'react-router-dom';
 import { MdEmail, MdLock } from 'react-icons/md';
 import { useUser } from '../../context/UserContext';
-import { iniciarSesion } from '../../api/usuarioApi';
+import { iniciarSesion } from '../../api/authApi';
 import login from './assets/login.png';
 
 const LoginSignup = () => {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,19 +17,19 @@ const LoginSignup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
+    if (!username || !password) {
       setError('Por favor, complete ambos campos.');
       return;
     }
     try {
       setLoading(true);
       setError('');
-      const response = await iniciarSesion(email, password);
+      const response = await iniciarSesion(username, password);
       console.log('Usuario logueado:', response.data); 
       loginContext(response.data);
       navigate('/home');
       } catch (err) {
-          setError('Email o contraseña incorrectos.');
+          setError('username o contraseña incorrectos.');
         } finally {
             setLoading(false);
           } // Redirección simulada
@@ -53,14 +54,14 @@ const LoginSignup = () => {
                         <div className="form-control mt-16">
                             <label className="flex items-center">
                                 <MdEmail className="mr-4" size={32} color="black" /> 
-                                <span className="label-text text-[32px] font-semibold text-black">Email</span>
+                                <span className="label-text text-[32px] font-semibold text-black">username</span>
                             </label>
                             <input
-                                type="email"
-                                placeholder="email"
+                                type="text"
+                                placeholder="username"
                                 className="input input-bordered text-slate-700 bg-white mt-4"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 required
                             />
                         </div>

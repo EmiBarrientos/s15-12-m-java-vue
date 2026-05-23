@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdEmail, MdLock, MdPerson, MdPhone } from 'react-icons/md';
 import { useUser } from '../../context/UserContext';
-import { registrarHuesped, registrarAnfitrion } from '../../api/clientApi';
+import { registrarHuesped, registrarAnfitrion } from '../../api/authApi';
 
 const Register = () => {
     const [tipo, setTipo] = useState(null); // 'huesped' o 'anfitrion'
     const [nombre, setNombre] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [telefono, setTelefono] = useState('');
     const [password, setPassword] = useState('');
@@ -18,7 +19,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!nombre || !email || !telefono || !password) {
+        if (!nombre || !username || !email || !telefono || !password) {
             setError('Por favor, complete todos los campos.');
             return;
         }
@@ -27,7 +28,8 @@ const Register = () => {
             setLoading(true);
             setError('');
 
-            const datos = { nombre, email, telefono, contrasena: password };
+            const datos = { nombre, username, email, telefono, contrasena: password };
+            console.log('Datos a registrar:', datos); // Verifica los datos antes de enviarlos
             const response = tipo === 'huesped'
                 ? await registrarHuesped(datos)
                 : await registrarAnfitrion(datos);
@@ -100,6 +102,20 @@ const Register = () => {
             <div className="flex justify-center items-center mb-14">
                 <div className="card w-[1206px] shadow-2xl bg-base-100">
                     <form className="card-body bg-slate-300 rounded-lg w-full h-full" onSubmit={handleSubmit}>
+                        <div className="form-control">
+                            <label className="flex items-center">
+                                <MdEmail className="mr-4" size={32} color="black" />
+                                <span className="label-text text-[32px] font-semibold text-black">Username</span>
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="username"
+                                className="input input-bordered text-slate-700 bg-white mt-4"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
                         <div className="form-control mt-8">
                             <label className="flex items-center">
                                 <MdPerson className="mr-4" size={32} color="black" />

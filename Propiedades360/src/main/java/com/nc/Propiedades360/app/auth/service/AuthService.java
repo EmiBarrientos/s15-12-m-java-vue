@@ -1,6 +1,7 @@
 package com.nc.Propiedades360.app.auth.service;
 
 import com.nc.Propiedades360.app.auth.dto.AuthResponse;
+import com.nc.Propiedades360.app.auth.dto.AuthResult;
 import com.nc.Propiedades360.app.auth.dto.LoginRequest;
 import com.nc.Propiedades360.app.auth.dto.RegisterRequest;
 import com.nc.Propiedades360.app.auth.jwt.JwtService;
@@ -12,6 +13,7 @@ import com.nc.Propiedades360.app.usuario.entity.Usuario;
 import com.nc.Propiedades360.app.usuario.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,19 +29,26 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
-    public AuthResponse iniciarSesion(LoginRequest request) {
-       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getContrasena()));
-        Usuario user= usuarioRepository.findByUsername(request.getUsername()).orElseThrow();
+    public AuthResult iniciarSesion(LoginRequest request) {
+         authenticationManager.authenticate(
+                 new UsernamePasswordAuthenticationToken(request.getUsername(),request.getContrasena())
+
+         );
+        Usuario user= usuarioRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new BadCredentialsException("Credenciales inválidas"));
         String token= jwtService.getToken(user);
         String role = user.getRol().toString() ;
         Long id = user.getId();
 
-        return AuthResponse.builder()
-                .token(token)
+        AuthResponse userdata= AuthResponse.builder()
                 .role(role)
                 .id(id)
                 .build();
+
+
+        return new AuthResult(token, userdata);
     }
+
 
 
     public AuthResponse registrarCliente(RegisterRequest request) {
@@ -51,7 +60,8 @@ public class AuthService {
         cliente.setTelefono(request.getTelefono());
         clienteService.saveCliente(cliente);
         return AuthResponse.builder()
-                .token(jwtService.getToken(cliente))
+                .role(cliente.getRol().toString())
+                .id(cliente.getId())
                 .build();
     }
 
@@ -64,7 +74,7 @@ public class AuthService {
         propietario.setTelefono(request.getTelefono());
         propietarioService.savePropietario(propietario);
         return AuthResponse.builder()
-                .token(jwtService.getToken(propietario))
+                .role(propietario.getRol().toString())
                 .build();
     }
 

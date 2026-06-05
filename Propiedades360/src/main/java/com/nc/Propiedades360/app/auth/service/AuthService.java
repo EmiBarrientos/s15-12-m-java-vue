@@ -75,6 +75,7 @@ public class AuthService {
         propietarioService.savePropietario(propietario);
         return AuthResponse.builder()
                 .role(propietario.getRol().toString())
+                .id(propietario.getId())
                 .build();
     }
 

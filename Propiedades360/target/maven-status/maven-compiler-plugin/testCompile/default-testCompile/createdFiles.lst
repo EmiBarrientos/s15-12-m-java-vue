@@ -1,0 +1,14 @@
+com\nc\Propiedades360\app\reserva\service\ReservaServiceTest.class
+com\nc\Propiedades360\app\pago\service\PagoServiceTest.class
+com\nc\Propiedades360\app\usuario\controller\UsuarioControllerTest.class
+com\nc\Propiedades360\app\cliente\controller\ClienteControllerTest.class
+com\nc\Propiedades360\app\propietario\service\PropietarioServiceTest.class
+com\nc\Propiedades360\app\visita\controller\VisitaControllerTest.class
+com\nc\Propiedades360\app\reserva\controller\ReservaControllerTest.class
+com\nc\Propiedades360\app\inmueble\controller\InmuebleControllerTest.class
+com\nc\Propiedades360\app\visita\service\VisitaServiceTest.class
+com\nc\Propiedades360\Propiedades360ApplicationTests.class
+com\nc\Propiedades360\app\pago\controller\PagoControllerTest.class
+com\nc\Propiedades360\app\propietario\controller\PropietarioControllerTest.class
+com\nc\Propiedades360\app\cliente\service\ClienteServiceTest.class
+com\nc\Propiedades360\app\inmueble\service\InmuebleServiceTest.class

@@ -9,7 +9,6 @@ import com.nc.Propiedades360.app.cliente.entity.Cliente;
 import com.nc.Propiedades360.app.cliente.service.ClienteService;
 import com.nc.Propiedades360.app.propietario.entity.Propietario;
 import com.nc.Propiedades360.app.propietario.service.PropietarioService;
-import com.nc.Propiedades360.app.usuario.entity.Usuario;
 import com.nc.Propiedades360.app.usuario.enums.Rol;
 import com.nc.Propiedades360.app.usuario.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;

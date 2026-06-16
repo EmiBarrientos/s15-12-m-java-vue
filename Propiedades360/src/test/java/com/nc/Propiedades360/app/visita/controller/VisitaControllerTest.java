@@ -1,15 +1,19 @@
 package com.nc.Propiedades360.app.visita.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nc.Propiedades360.app.auth.jwt.JwtAuthenticationFilter;
+import com.nc.Propiedades360.app.auth.jwt.JwtService;
 import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.visita.entity.Visita;
 import com.nc.Propiedades360.app.visita.service.VisitaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -20,7 +24,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(VisitaController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class VisitaControllerTest {
+
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @MockBean
+    private AuthenticationProvider authenticationProvider;
+
+    @MockBean
+    private JwtService jwtService;
+
 
     @Autowired
     private MockMvc mockMvc;
@@ -46,7 +61,7 @@ public class VisitaControllerTest {
     void obtenerTodas_retorna200() throws Exception {
         when(visitaService.findAll()).thenReturn(List.of(visita));
 
-        mockMvc.perform(get("/visitas"))
+        mockMvc.perform(get("/api/visitas"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L));
     }
@@ -57,7 +72,7 @@ public class VisitaControllerTest {
     void obtener_idExiste_retorna200() throws Exception {
         when(visitaService.findById(1L)).thenReturn(visita);
 
-        mockMvc.perform(get("/visitas/1"))
+        mockMvc.perform(get("/api/visitas/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L));
     }
@@ -67,7 +82,7 @@ public class VisitaControllerTest {
         when(visitaService.findById(99L))
                 .thenThrow(new ResourceNotFoundException("Visita no encontrada"));
 
-        mockMvc.perform(get("/visitas/99"))
+        mockMvc.perform(get("/api/visitas/99"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Visita no encontrada"));
     }
@@ -78,7 +93,7 @@ public class VisitaControllerTest {
     void crear_datosValidos_retorna200() throws Exception {
         when(visitaService.crearVisita(any(Visita.class))).thenReturn(visita);
 
-        mockMvc.perform(post("/visitas")
+        mockMvc.perform(post("/api/visitas")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(visita)))
                 .andExpect(status().isOk())
@@ -91,7 +106,7 @@ public class VisitaControllerTest {
     void actualizar_visitaExiste_retorna200() throws Exception {
         when(visitaService.actualizarVisita(any(Visita.class))).thenReturn(visita);
 
-        mockMvc.perform(put("/visitas/1")
+        mockMvc.perform(put("/api/visitas/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(visita)))
                 .andExpect(status().isOk())
@@ -103,7 +118,7 @@ public class VisitaControllerTest {
         when(visitaService.actualizarVisita(any(Visita.class)))
                 .thenThrow(new ResourceNotFoundException("Visita no encontrada"));
 
-        mockMvc.perform(put("/visitas/99")
+        mockMvc.perform(put("/api/visitas/99")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(visita)))
                 .andExpect(status().isNotFound());
@@ -113,7 +128,7 @@ public class VisitaControllerTest {
 
     @Test
     void eliminar_visitaExiste_retorna204() throws Exception {
-        mockMvc.perform(delete("/visitas/1"))
+        mockMvc.perform(delete("/api/visitas/1"))
                 .andExpect(status().isNoContent());
 
         verify(visitaService, times(1)).eliminarVisita(1L);
@@ -124,7 +139,7 @@ public class VisitaControllerTest {
         doThrow(new ResourceNotFoundException("Visita no encontrada"))
                 .when(visitaService).eliminarVisita(99L);
 
-        mockMvc.perform(delete("/visitas/99"))
+        mockMvc.perform(delete("/api/visitas/99"))
                 .andExpect(status().isNotFound());
     }
 }

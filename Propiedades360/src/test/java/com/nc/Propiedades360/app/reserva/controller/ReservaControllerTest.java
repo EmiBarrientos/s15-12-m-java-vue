@@ -1,5 +1,7 @@
 package com.nc.Propiedades360.app.reserva.controller;
 
+import com.nc.Propiedades360.app.auth.jwt.JwtAuthenticationFilter;
+import com.nc.Propiedades360.app.auth.jwt.JwtService;
 import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.reserva.entity.Reserva;
 import com.nc.Propiedades360.app.reserva.enums.Estado;
@@ -7,8 +9,10 @@ import com.nc.Propiedades360.app.reserva.service.ReservaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
@@ -18,7 +22,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ReservaController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class ReservaControllerTest {
+
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @MockBean
+    private AuthenticationProvider authenticationProvider;
+
+    @MockBean
+    private JwtService jwtService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,7 +55,7 @@ public class ReservaControllerTest {
     void detalle_idExiste_retorna200() throws Exception {
         when(reservaService.findById(1L)).thenReturn(Optional.of(reserva));
 
-        mockMvc.perform(get("/reservas/1"))
+        mockMvc.perform(get("/api/reservas/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.estado").value("PENDIENTE"));
     }
@@ -50,7 +64,7 @@ public class ReservaControllerTest {
     void detalle_idNoExiste_retorna404() throws Exception {
         when(reservaService.findById(99L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/reservas/99"))
+        mockMvc.perform(get("/api/reservas/99"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Reserva no encontrada"));
     }
@@ -62,7 +76,7 @@ public class ReservaControllerTest {
         reserva.setEstado(Estado.CONFIRMADA);
         when(reservaService.confirmarReserva(1L)).thenReturn(reserva);
 
-        mockMvc.perform(post("/reservas/1/confirmar"))
+        mockMvc.perform(post("/api/reservas/1/confirmar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.estado").value("CONFIRMADA"));
     }
@@ -72,7 +86,7 @@ public class ReservaControllerTest {
         when(reservaService.confirmarReserva(99L))
                 .thenThrow(new ResourceNotFoundException("Reserva no encontrada"));
 
-        mockMvc.perform(post("/reservas/99/confirmar"))
+        mockMvc.perform(post("/api/reservas/99/confirmar"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Reserva no encontrada"));
     }
@@ -84,7 +98,7 @@ public class ReservaControllerTest {
         reserva.setEstado(Estado.CANCELADA);
         when(reservaService.cancelarReserva(1L)).thenReturn(reserva);
 
-        mockMvc.perform(post("/reservas/1/cancelar"))
+        mockMvc.perform(post("/api/reservas/1/cancelar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.estado").value("CANCELADA"));
     }
@@ -94,7 +108,7 @@ public class ReservaControllerTest {
         when(reservaService.cancelarReserva(99L))
                 .thenThrow(new ResourceNotFoundException("Reserva no encontrada"));
 
-        mockMvc.perform(post("/reservas/99/cancelar"))
+        mockMvc.perform(post("/api/reservas/99/cancelar"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Reserva no encontrada"));
     }

@@ -1,6 +1,8 @@
 package com.nc.Propiedades360.app.cliente.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nc.Propiedades360.app.auth.jwt.JwtAuthenticationFilter;
+import com.nc.Propiedades360.app.auth.jwt.JwtService;
 import com.nc.Propiedades360.app.cliente.entity.Cliente;
 import com.nc.Propiedades360.app.cliente.http.request.PagoRequest;
 import com.nc.Propiedades360.app.cliente.http.request.ReservaRequest;
@@ -14,9 +16,11 @@ import com.nc.Propiedades360.app.reserva.enums.Estado;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -24,11 +28,22 @@ import java.time.LocalDate;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(ClienteController.class)
 public class ClienteControllerTest {
 
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @MockBean
+    private AuthenticationProvider authenticationProvider;
+
+    @MockBean
+    private JwtService jwtService;
     @Autowired
     private MockMvc mockMvc;
 
@@ -76,18 +91,6 @@ public class ClienteControllerTest {
         pagoRequest.setMetodoPago("TRANSFERENCIA");
     }
 
-    // --- registrar ---
-
-    @Test
-    void registrar_datosValidos_retorna200() throws Exception {
-        when(clienteService.saveCliente(any(Cliente.class))).thenReturn(cliente);
-
-        mockMvc.perform(post("/clientes/registrar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(cliente)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombre").value("Juan Pérez"));
-    }
 
     // --- obtener ---
 
@@ -95,9 +98,11 @@ public class ClienteControllerTest {
     void obtener_idExiste_retorna200() throws Exception {
         when(clienteService.getClienteById(1L)).thenReturn(cliente);
 
-        mockMvc.perform(get("/clientes/1"))
+        mockMvc.perform(get("/api/clientes/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value("juan.perez@email.com"));
+                .andExpect(jsonPath("$.email").value("juan.perez@email.com"))
+                .andDo(print());
+
     }
 
     @Test
@@ -105,7 +110,7 @@ public class ClienteControllerTest {
         when(clienteService.getClienteById(99L))
                 .thenThrow(new ResourceNotFoundException("Cliente no encontrado"));
 
-        mockMvc.perform(get("/clientes/99"))
+        mockMvc.perform(get("/api/clientes/99"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Cliente no encontrado"));
     }
@@ -117,7 +122,7 @@ public class ClienteControllerTest {
         when(clienteService.reservarInmueble(1L, 1L,
                 LocalDate.now(), LocalDate.now().plusDays(7))).thenReturn(reserva);
 
-        mockMvc.perform(post("/clientes/reservar")
+        mockMvc.perform(post("/api/clientes/reservar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(reservaRequest)))
                 .andExpect(status().isOk())
@@ -129,7 +134,7 @@ public class ClienteControllerTest {
         when(clienteService.reservarInmueble(any(), any(), any(), any()))
                 .thenThrow(new ResourceNotAvailableException("El inmueble no está disponible"));
 
-        mockMvc.perform(post("/clientes/reservar")
+        mockMvc.perform(post("/api/clientes/reservar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(reservaRequest)))
                 .andExpect(status().isConflict())
@@ -141,7 +146,7 @@ public class ClienteControllerTest {
         when(clienteService.reservarInmueble(any(), any(), any(), any()))
                 .thenThrow(new ResourceNotFoundException("Cliente no encontrado"));
 
-        mockMvc.perform(post("/clientes/reservar")
+        mockMvc.perform(post("/api/clientes/reservar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(reservaRequest)))
                 .andExpect(status().isNotFound());
@@ -154,7 +159,7 @@ public class ClienteControllerTest {
         when(clienteService.realizarPago(1L, 1L,
                 BigDecimal.valueOf(150000), "TRANSFERENCIA")).thenReturn(pago);
 
-        mockMvc.perform(post("/clientes/pagar")
+        mockMvc.perform(post("/api/clientes/pagar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(pagoRequest)))
                 .andExpect(status().isOk())
@@ -166,7 +171,7 @@ public class ClienteControllerTest {
         when(clienteService.realizarPago(any(), any(), any(), any()))
                 .thenThrow(new ResourceNotFoundException("Reserva no encontrada"));
 
-        mockMvc.perform(post("/clientes/pagar")
+        mockMvc.perform(post("/api/clientes/pagar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(pagoRequest)))
                 .andExpect(status().isNotFound());

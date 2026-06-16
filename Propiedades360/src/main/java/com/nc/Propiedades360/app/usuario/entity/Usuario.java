@@ -1,5 +1,6 @@
 package com.nc.Propiedades360.app.usuario.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nc.Propiedades360.app.usuario.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
@@ -39,6 +40,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private Rol rol;
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(rol.name()));
@@ -53,22 +55,22 @@ public class Usuario implements UserDetails {
     public String getUsername() {
         return this.username;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

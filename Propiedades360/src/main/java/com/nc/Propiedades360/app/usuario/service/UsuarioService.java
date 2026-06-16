@@ -24,28 +24,19 @@ public class UsuarioService {
     }
 
     public Optional<UsuarioDto> findByUsername(String username) {
-        Optional<Usuario> user=usuarioRepository.findByUsername(username);
 
-        return Optional.of(UsuarioDto.builder()
-                        .id(user.get().getId())
-                        .username(user.get().getUsername())
-                        .nombre(user.get().getNombre())
-                        .rol(user.get().getRol())
-                        .email(user.get().getEmail())
-                        .telefono(user.get().getTelefono())
-                        .contrasena(user.get().getContrasena())
-                .build());
+
+        return usuarioRepository.findByUsername(username)
+                .map(usuario -> UsuarioDto.builder()
+                                .id(usuario.getId())
+                                .email(usuario.getContrasena())
+                                .nombre(usuario.getNombre())
+                                .username(usuario.getUsername())
+                                .telefono(usuario.getTelefono())
+                                .contrasena(usuario.getContrasena())
+                                .build());
+
     }
 
 
 }
-
-/*
-*
-*     public Usuario registrarse(Usuario usuario) {
-        return usuarioRepository.save(usuario);
-    }
-*
-*
-*
-* */

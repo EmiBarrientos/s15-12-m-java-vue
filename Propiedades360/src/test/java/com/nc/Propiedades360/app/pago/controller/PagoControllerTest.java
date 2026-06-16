@@ -1,5 +1,7 @@
 package com.nc.Propiedades360.app.pago.controller;
 
+import com.nc.Propiedades360.app.auth.jwt.JwtAuthenticationFilter;
+import com.nc.Propiedades360.app.auth.jwt.JwtService;
 import com.nc.Propiedades360.app.pago.entity.Pago;
 import com.nc.Propiedades360.app.pago.enums.EstadoPago;
 import com.nc.Propiedades360.app.pago.service.PagoService;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -21,6 +24,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(PagoController.class)
 @AutoConfigureMockMvc(addFilters = false)
 public class PagoControllerTest {
+
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @MockBean
+    private AuthenticationProvider authenticationProvider;
+
+    @MockBean
+    private JwtService jwtService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,7 +57,7 @@ public class PagoControllerTest {
     void detalle_idExiste_retorna200() throws Exception {
         when(pagoService.findById(1L)).thenReturn(Optional.of(pago));
 
-        mockMvc.perform(get("/pagos/1"))
+        mockMvc.perform(get("/api/pagos/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.estadoPago").value("COMPLETADO"));
     }
@@ -54,7 +66,7 @@ public class PagoControllerTest {
     void detalle_idNoExiste_retorna404() throws Exception {
         when(pagoService.findById(99L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/pagos/99"))
+        mockMvc.perform(get("/api/pagos/99"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Pago no encontrado"));
     }
@@ -65,7 +77,7 @@ public class PagoControllerTest {
     void estado_idExiste_retorna200() throws Exception {
         when(pagoService.verificarEstadoPago(1L)).thenReturn(Optional.of(EstadoPago.COMPLETADO));
 
-        mockMvc.perform(get("/pagos/1/estado"))
+        mockMvc.perform(get("/api/pagos/1/estado"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value("COMPLETADO"));
     }
@@ -74,7 +86,7 @@ public class PagoControllerTest {
     void estado_idNoExiste_retorna404() throws Exception {
         when(pagoService.verificarEstadoPago(99L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/pagos/99/estado"))
+        mockMvc.perform(get("/api/pagos/99/estado"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Pago no encontrado"));
     }

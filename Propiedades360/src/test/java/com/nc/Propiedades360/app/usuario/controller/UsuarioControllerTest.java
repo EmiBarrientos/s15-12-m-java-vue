@@ -1,6 +1,8 @@
 package com.nc.Propiedades360.app.usuario.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nc.Propiedades360.app.auth.jwt.JwtAuthenticationFilter;
+import com.nc.Propiedades360.app.auth.jwt.JwtService;
 import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.auth.dto.LoginRequest;
 import com.nc.Propiedades360.app.usuario.entity.Usuario;
@@ -8,9 +10,11 @@ import com.nc.Propiedades360.app.usuario.service.UsuarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
@@ -18,7 +22,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UsuarioController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class UsuarioControllerTest {
+
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @MockBean
+    private AuthenticationProvider authenticationProvider;
+
+    @MockBean
+    private JwtService jwtService;
+
 
     @Autowired
     private MockMvc mockMvc;
@@ -77,7 +92,7 @@ public class UsuarioControllerTest {
     void actualizarPerfil_usuarioExiste_retorna200() throws Exception {
         when(usuarioService.actualizarPerfil(any(Usuario.class))).thenReturn(usuario);
 
-        mockMvc.perform(put("/usuarios/actualizar-perfil")
+        mockMvc.perform(put("/api/usuarios/actualizar-perfil")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(usuario)))
                 .andExpect(status().isOk())
@@ -89,7 +104,7 @@ public class UsuarioControllerTest {
         when(usuarioService.actualizarPerfil(any(Usuario.class)))
                 .thenThrow(new ResourceNotFoundException("Usuario no encontrado"));
 
-        mockMvc.perform(put("/usuarios/actualizar-perfil")
+        mockMvc.perform(put("/api/usuarios/actualizar-perfil")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(usuario)))
                 .andExpect(status().isNotFound())

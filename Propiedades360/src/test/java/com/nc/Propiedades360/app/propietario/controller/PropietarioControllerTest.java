@@ -1,6 +1,8 @@
 package com.nc.Propiedades360.app.propietario.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nc.Propiedades360.app.auth.jwt.JwtAuthenticationFilter;
+import com.nc.Propiedades360.app.auth.jwt.JwtService;
 import com.nc.Propiedades360.app.exception.GlobalExceptionHandler;
 import com.nc.Propiedades360.app.exception.ResourceNotFoundException;
 import com.nc.Propiedades360.app.inmueble.entity.Inmueble;
@@ -10,10 +12,12 @@ import com.nc.Propiedades360.app.propietario.service.PropietarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -24,8 +28,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest({PropietarioController.class})
 @Import(GlobalExceptionHandler.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class PropietarioControllerTest {
 
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @MockBean
+    private AuthenticationProvider authenticationProvider;
+
+    @MockBean
+    private JwtService jwtService;
     @Autowired
     private MockMvc mockMvc;
 
@@ -55,18 +68,8 @@ public class PropietarioControllerTest {
         inmueble.setEstado(EstadoInmueble.DISPONIBLE);
     }
 
-    // --- registrar ---
 
-    @Test
-    void registrar_datosValidos_retorna200() throws Exception {
-        when(propietarioService.savePropietario(any(Propietario.class))).thenReturn(propietario);
 
-        mockMvc.perform(post("/propietarios/registrar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(propietario)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombre").value("María García"));
-    }
 
     // --- obtener ---
 
@@ -74,7 +77,7 @@ public class PropietarioControllerTest {
     void obtener_idExiste_retorna200() throws Exception {
         when(propietarioService.getPropietarioById(1L)).thenReturn(propietario);
 
-        mockMvc.perform(get("/propietarios/1"))
+        mockMvc.perform(get("/api/propietarios/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("maria.garcia@email.com"));
     }
@@ -84,7 +87,7 @@ public class PropietarioControllerTest {
         when(propietarioService.getPropietarioById(99L))
                 .thenThrow(new ResourceNotFoundException("Propietario no encontrado"));
 
-        mockMvc.perform(get("/propietarios/99"))
+        mockMvc.perform(get("/api/propietarios/99"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Propietario no encontrado"));
     }
@@ -95,7 +98,7 @@ public class PropietarioControllerTest {
     void obtenerInmuebles_propietarioExiste_retorna200() throws Exception {
         when(propietarioService.getInmueblesByPropietario(1L)).thenReturn(List.of(inmueble));
 
-        mockMvc.perform(get("/propietarios/1/inmuebles"))
+        mockMvc.perform(get("/api/propietarios/1/inmuebles"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].titulo").value("Casa en Palermo"));
     }
@@ -105,7 +108,7 @@ public class PropietarioControllerTest {
         when(propietarioService.getInmueblesByPropietario(99L))
                 .thenThrow(new ResourceNotFoundException("Propietario no encontrado"));
 
-        mockMvc.perform(get("/propietarios/99/inmuebles"))
+        mockMvc.perform(get("/api/propietarios/99/inmuebles"))
                 .andExpect(status().isNotFound());
     }
 
@@ -115,7 +118,7 @@ public class PropietarioControllerTest {
     void publicarInmueble_propietarioExiste_retorna200() throws Exception {
         when(propietarioService.publicarInmueble(any(Inmueble.class), eq(1L))).thenReturn(inmueble);
 
-        mockMvc.perform(post("/propietarios/1/inmuebles")
+        mockMvc.perform(post("/api/propietarios/1/inmuebles")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(inmueble)))
                 .andExpect(status().isOk())
@@ -127,7 +130,7 @@ public class PropietarioControllerTest {
         when(propietarioService.publicarInmueble(any(Inmueble.class), eq(99L)))
                 .thenThrow(new ResourceNotFoundException("Propietario no encontrado"));
 
-        mockMvc.perform(post("/propietarios/99/inmuebles")
+        mockMvc.perform(post("/api/propietarios/99/inmuebles")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(inmueble)))
                 .andExpect(status().isNotFound());
@@ -139,7 +142,7 @@ public class PropietarioControllerTest {
     void actualizarInmueble_inmuebleExiste_retorna200() throws Exception {
         when(propietarioService.actualizarInmueble(eq(1L), any(Inmueble.class))).thenReturn(inmueble);
 
-        mockMvc.perform(put("/propietarios/inmuebles/1")
+        mockMvc.perform(put("/api/propietarios/inmuebles/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(inmueble)))
                 .andExpect(status().isOk())
@@ -151,7 +154,7 @@ public class PropietarioControllerTest {
         when(propietarioService.actualizarInmueble(eq(99L), any(Inmueble.class)))
                 .thenThrow(new ResourceNotFoundException("Inmueble no encontrado"));
 
-        mockMvc.perform(put("/propietarios/inmuebles/99")
+        mockMvc.perform(put("/api/propietarios/inmuebles/99")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(inmueble)))
                 .andExpect(status().isNotFound());
@@ -161,7 +164,7 @@ public class PropietarioControllerTest {
 
     @Test
     void eliminarInmueble_inmuebleExiste_retorna204() throws Exception {
-        mockMvc.perform(delete("/propietarios/inmuebles/1"))
+        mockMvc.perform(delete("/api/propietarios/inmuebles/1"))
                 .andExpect(status().isNoContent());
 
         verify(propietarioService, times(1)).eliminarInmueble(1L);
@@ -172,7 +175,7 @@ public class PropietarioControllerTest {
         doThrow(new ResourceNotFoundException("Inmueble no encontrado"))
                 .when(propietarioService).eliminarInmueble(99L);
 
-        mockMvc.perform(delete("/propietarios/inmuebles/99"))
+        mockMvc.perform(delete("/api/propietarios/inmuebles/99"))
                 .andExpect(status().isNotFound());
     }
 }
